@@ -1,0 +1,86 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  href: string;
+  pubDate?: Date;
+  tags?: string[];
+  type?: string;
+  featured?: boolean;
+}
+const { title, description, href, pubDate, tags = [], type, featured = false } = Astro.props;
+
+const formattedDate = pubDate ? new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+}).format(pubDate) : null;
+---
+
+<a href={href} class:list={['card', 'article-card', { featured }]}>
+  <div class="article-meta">
+    {type && <span class="tag">{type}</span>}
+    {formattedDate && <time datetime={pubDate?.toISOString()}>{formattedDate}</time>}
+  </div>
+  <h3 class="article-title">{title}</h3>
+  <p class="article-desc">{description}</p>
+  {tags.length > 0 && (
+    <div class="article-tags">
+      {tags.slice(0, 3).map(tag => (
+        <span class="article-tag">{tag}</span>
+      ))}
+    </div>
+  )}
+</a>
+
+<style>
+  .article-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+  }
+
+  .article-card.featured {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, var(--accent-subtle), transparent);
+  }
+
+  .article-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .article-meta time {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .article-title {
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.35;
+  }
+
+  .article-desc {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    flex: 1;
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .article-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .article-tag {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    background: var(--bg-tertiary);
+    padding: 0.15em 0.5em;
+    border-radius: 3px;
+  }
+</style>

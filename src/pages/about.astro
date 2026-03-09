@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SubscribeForm from '../components/SubscribeForm.astro';
+---
+
+<BaseLayout title="About" description="What letsopen.ai is, why it exists, and how it works. An AI-operated, human-edited publication for the open source AI ecosystem.">
+  <section class="section">
+    <div class="container content-width">
+      <h1>About letsopen.ai</h1>
+
+      <div class="prose">
+        <p class="lede">
+          <strong>letsopen.ai</strong> is the homepage for open source AI. A trusted, AI-operated source for the projects, tools, models, workflows, and agent systems that matter in the open ecosystem.
+        </p>
+
+        <h2>Why this exists</h2>
+        <p>
+          Open source AI is moving fast. New models drop weekly. Agent frameworks proliferate. Tools launch, evolve, and sometimes disappear. Keeping up is a full-time job — and most of the coverage out there is either surface-level news aggregation or SEO-optimized filler.
+        </p>
+        <p>
+          We wanted something different: a publication that's actually useful for builders. High-signal, opinionated, regularly updated, and ruthlessly selective about what deserves attention.
+        </p>
+
+        <h2>How it works</h2>
+        <p>
+          letsopen.ai is an <strong>AI-operated, human-edited</strong> publication. That's not a marketing phrase — it's the actual operating model.
+        </p>
+        <p>
+          AI agents handle the heavy lifting: scanning the ecosystem for developments, assembling research briefs, drafting content, maintaining and updating existing articles, and preparing distribution. A human editor provides taste, judgment, and the final "publish" decision.
+        </p>
+        <p>
+          This model lets a small operation produce coverage that would normally require a full editorial team. The AI does the work; the human ensures the quality.
+        </p>
+
+        <h2>What we cover</h2>
+        <p>
+          Our initial focus is the <strong>open source AI agents</strong> space — personal AI assistants, coding agents, multi-agent orchestration, and the tools and infrastructure that power them. This is where the most interesting work is happening in open source AI right now.
+        </p>
+        <p>
+          Over time, we'll expand to cover the broader open source AI ecosystem: models, inference, training, creative tools, and more.
+        </p>
+
+        <h2>Our principles</h2>
+        <ul>
+          <li><strong>Signal over noise.</strong> We cover what matters, not everything that happens.</li>
+          <li><strong>Useful over impressive.</strong> Every piece should help someone make a better decision or understand something more clearly.</li>
+          <li><strong>Honest over neutral.</strong> We have opinions and we share them. We also show our evidence and acknowledge uncertainty.</li>
+          <li><strong>Quality over quantity.</strong> Fewer, stronger pieces. Nothing that reads like filler.</li>
+          <li><strong>Open over closed.</strong> We believe in the open source AI ecosystem and cover it because it matters, not because it's trendy.</li>
+        </ul>
+
+        <h2>Built with</h2>
+        <p>
+          This site is built with <a href="https://astro.build">Astro</a>, deployed on <a href="https://pages.cloudflare.com">Cloudflare Pages</a>, and the content is authored in Markdown — AI-friendly by design. The stack is intentionally simple: the content is the product, not the technology.
+        </p>
+
+        <h2>Get in touch</h2>
+        <p>
+          We're always interested in hearing from builders, maintainers, and anyone working in the open source AI space. Reach out on <a href="https://x.com/letsopenai">X/Twitter</a> or via email.
+        </p>
+      </div>
+
+      <div style="margin-top: 3rem;">
+        <SubscribeForm variant="full" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  h1 {
+    margin-bottom: 2rem;
+  }
+  .lede {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    line-height: 1.7;
+  }
+</style>

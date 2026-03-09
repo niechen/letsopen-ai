@@ -1,0 +1,145 @@
+---
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/topics', label: 'Topics' },
+  { href: '/guides', label: 'Guides' },
+  { href: '/comparisons', label: 'Comparisons' },
+  { href: '/about', label: 'About' },
+];
+---
+
+<header class="header">
+  <div class="container header-inner">
+    <a href="/" class="logo" aria-label="letsopen.ai home">
+      <span class="logo-mark">⟐</span>
+      <span class="logo-text">letsopen<span class="logo-dot">.</span>ai</span>
+    </a>
+
+    <nav class="nav" aria-label="Main navigation">
+      {navLinks.map(link => (
+        <a href={link.href} class="nav-link">{link.label}</a>
+      ))}
+      <a href="/subscribe" class="btn btn-primary btn-sm">Subscribe</a>
+    </nav>
+
+    <button class="mobile-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10, 10, 11, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-subtle);
+    height: var(--nav-height);
+  }
+
+  [data-theme="light"] .header {
+    background: rgba(255, 255, 255, 0.85);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-primary);
+    font-weight: 800;
+    font-size: 1.15rem;
+    letter-spacing: -0.03em;
+  }
+  .logo:hover { color: var(--text-primary); }
+
+  .logo-mark {
+    font-size: 1.4rem;
+    color: var(--accent);
+  }
+
+  .logo-dot {
+    color: var(--accent);
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+  }
+
+  .nav-link {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.15s ease;
+  }
+  .nav-link:hover {
+    color: var(--text-primary);
+  }
+
+  .btn-sm {
+    padding: 0.45rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  .mobile-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .mobile-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text-primary);
+    border-radius: 1px;
+    transition: 0.2s;
+  }
+
+  @media (max-width: 768px) {
+    .nav {
+      display: none;
+      position: absolute;
+      top: var(--nav-height);
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background: var(--bg-primary);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem;
+      gap: 1rem;
+    }
+    .nav.open {
+      display: flex;
+    }
+    .mobile-toggle {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector('.mobile-toggle');
+  const nav = document.querySelector('.nav');
+  toggle?.addEventListener('click', () => {
+    nav?.classList.toggle('open');
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!expanded));
+  });
+</script>

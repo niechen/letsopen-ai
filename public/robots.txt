@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://letsopen.ai/sitemap-index.xml

@@ -1,0 +1,301 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import TopicCard from '../components/TopicCard.astro';
+import SubscribeForm from '../components/SubscribeForm.astro';
+import { getCollection } from 'astro:content';
+
+const allArticles = await getCollection('articles', ({ data }) => !data.draft);
+const allGuides = await getCollection('guides', ({ data }) => !data.draft);
+const allComparisons = await getCollection('comparisons', ({ data }) => !data.draft);
+const hubs = await getCollection('hubs', ({ data }) => !data.draft);
+
+const sortedHubs = hubs.sort((a, b) => a.data.order - b.data.order);
+
+const featuredArticle = allArticles.find(a => a.data.featured);
+const recentArticles = allArticles
+  .filter(a => !a.data.featured)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const recentGuides = allGuides
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 2);
+
+const recentComparisons = allComparisons
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 2);
+---
+
+<BaseLayout title="Home">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">The homepage for open source AI</div>
+        <h1 class="hero-title">
+          Understand what matters.<br />
+          <span class="hero-accent">Build what works.</span>
+        </h1>
+        <p class="hero-desc">
+          High-signal coverage of the open source AI projects, tools, models, and agent systems that matter. AI-operated, human-edited.
+        </p>
+        <div class="hero-actions">
+          <a href="/subscribe" class="btn btn-primary">Subscribe for free</a>
+          <a href="/topics" class="btn btn-outline">Explore topics →</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-glyph">⟐</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Article -->
+  {featuredArticle && (
+    <section class="section">
+      <div class="container">
+        <div class="section-label">Featured</div>
+        <a href={`/articles/${featuredArticle.id}`} class="featured-card">
+          <div class="featured-meta">
+            <span class="tag">{featuredArticle.data.type}</span>
+            <time datetime={featuredArticle.data.pubDate.toISOString()}>
+              {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric' }).format(featuredArticle.data.pubDate)}
+            </time>
+          </div>
+          <h2 class="featured-title">{featuredArticle.data.title}</h2>
+          <p class="featured-desc">{featuredArticle.data.description}</p>
+          <span class="featured-link">Read article →</span>
+        </a>
+      </div>
+    </section>
+  )}
+
+  <!-- Topic Hubs -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Topics</h2>
+        <a href="/topics" class="section-link">View all →</a>
+      </div>
+      <div class="grid-4">
+        {sortedHubs.map(hub => (
+          <TopicCard
+            title={hub.data.title}
+            description={hub.data.description}
+            href={`/topics/${hub.id}`}
+            icon={hub.data.icon}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest Articles -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Latest</h2>
+      </div>
+      <div class="grid-3">
+        {recentArticles.map(article => (
+          <ArticleCard
+            title={article.data.title}
+            description={article.data.description}
+            href={`/articles/${article.id}`}
+            pubDate={article.data.pubDate}
+            tags={article.data.tags}
+            type={article.data.type}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Guides & Comparisons -->
+  <section class="section">
+    <div class="container">
+      <div class="grid-2">
+        <div>
+          <div class="section-header">
+            <h3>Guides</h3>
+            <a href="/guides" class="section-link">All guides →</a>
+          </div>
+          {recentGuides.map(guide => (
+            <ArticleCard
+              title={guide.data.title}
+              description={guide.data.description}
+              href={`/guides/${guide.id}`}
+              pubDate={guide.data.pubDate}
+              tags={guide.data.tags}
+            />
+          ))}
+        </div>
+        <div>
+          <div class="section-header">
+            <h3>Comparisons</h3>
+            <a href="/comparisons" class="section-link">All comparisons →</a>
+          </div>
+          {recentComparisons.map(comp => (
+            <ArticleCard
+              title={comp.data.title}
+              description={comp.data.description}
+              href={`/comparisons/${comp.id}`}
+              pubDate={comp.data.pubDate}
+              tags={comp.data.tags}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Subscribe CTA -->
+  <section class="section">
+    <div class="container">
+      <SubscribeForm variant="full" />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .hero {
+    padding: 5rem 0 4rem;
+  }
+  .hero .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+  .hero-content {
+    max-width: 640px;
+  }
+  .hero-badge {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+    padding: 0.3em 0.8em;
+    background: var(--accent-subtle);
+    border-radius: 4px;
+  }
+  .hero-title {
+    font-size: clamp(2.25rem, 5.5vw, 3.5rem);
+    line-height: 1.1;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.03em;
+  }
+  .hero-accent {
+    color: var(--accent);
+  }
+  .hero-desc {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 520px;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .hero-visual {
+    flex-shrink: 0;
+  }
+  .hero-glyph {
+    font-size: 8rem;
+    color: var(--accent);
+    opacity: 0.15;
+    line-height: 1;
+  }
+
+  /* Section helpers */
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  .section-link {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+  .section-link:hover {
+    color: var(--accent);
+  }
+
+  /* Featured card */
+  .featured-card {
+    display: block;
+    background: linear-gradient(135deg, var(--accent-subtle), transparent 60%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    transition: border-color 0.2s ease;
+    color: inherit;
+  }
+  .featured-card:hover {
+    border-color: var(--accent);
+    color: inherit;
+  }
+  .featured-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .featured-meta time {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  .featured-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 0.75rem;
+  }
+  .featured-desc {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    max-width: 640px;
+    margin-bottom: 1.25rem;
+  }
+  .featured-link {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  @media (max-width: 768px) {
+    .hero .container {
+      flex-direction: column;
+      text-align: center;
+    }
+    .hero-desc {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-actions {
+      justify-content: center;
+    }
+    .hero-visual {
+      display: none;
+    }
+    .featured-card {
+      padding: 1.5rem;
+    }
+  }
+</style>

@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import SubscribeForm from '../../components/SubscribeForm.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const hubs = await getCollection('hubs');
+  return hubs.map(hub => ({ params: { id: hub.id }, props: { hub } }));
+}
+
+const { hub } = Astro.props;
+const { Content } = await render(hub);
+
+const articles = await getCollection('articles', ({ data }) => !data.draft && data.hub === hub.id);
+const sortedArticles = articles.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title={hub.data.title} description={hub.data.description} ogType="article">
+  <article class="section">
+    <div class="container content-width">
+      <div class="hub-header">
+        {hub.data.icon && <span class="hub-icon">{hub.data.icon}</span>}
+        <h1>{hub.data.title}</h1>
+        <p class="hub-desc">{hub.data.description}</p>
+      </div>
+
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+
+  {sortedArticles.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2 style="margin-bottom: 1.5rem;">Related articles</h2>
+        <div class="grid-3">
+          {sortedArticles.map(article => (
+            <ArticleCard
+              title={article.data.title}
+              description={article.data.description}
+              href={`/articles/${article.id}`}
+              pubDate={article.data.pubDate}
+              tags={article.data.tags}
+              type={article.data.type}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="container">
+      <SubscribeForm variant="full" />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hub-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .hub-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 1rem;
+  }
+  .hub-header h1 {
+    margin-bottom: 0.75rem;
+  }
+  .hub-desc {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+  }
+</style>

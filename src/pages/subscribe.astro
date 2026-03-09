@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SubscribeForm from '../components/SubscribeForm.astro';
+---
+
+<BaseLayout title="Subscribe" description="Get a weekly digest of the most important open source AI projects, tools, and analysis. Free, no spam.">
+  <section class="subscribe-page">
+    <div class="container content-width">
+      <div class="subscribe-hero">
+        <h1>Stay ahead of open source AI</h1>
+        <p>
+          A weekly digest of the projects, tools, and developments that matter. Curated by AI, edited by humans. No spam, no filler — just the signal.
+        </p>
+      </div>
+
+      <SubscribeForm variant="full" />
+
+      <div class="what-you-get">
+        <h2>What you'll get</h2>
+        <div class="features">
+          <div class="feature">
+            <span class="feature-icon">📬</span>
+            <h3>Weekly digest</h3>
+            <p>The most important developments in open source AI, curated and summarized.</p>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">🔍</span>
+            <h3>New articles</h3>
+            <p>Guides, comparisons, and analysis published during the week.</p>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">🚀</span>
+            <h3>Projects to watch</h3>
+            <p>Emerging open source AI projects worth paying attention to.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .subscribe-page {
+    padding: 5rem 0;
+  }
+
+  .subscribe-hero {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .subscribe-hero h1 {
+    margin-bottom: 1rem;
+  }
+
+  .subscribe-hero p {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .what-you-get {
+    margin-top: 4rem;
+  }
+
+  .what-you-get h2 {
+    margin-bottom: 1.5rem;
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .feature {
+    padding: 1.25rem;
+  }
+
+  .feature-icon {
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  .feature h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+</style>

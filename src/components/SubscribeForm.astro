@@ -1,0 +1,89 @@
+---
+interface Props {
+  variant?: 'inline' | 'full';
+}
+const { variant = 'inline' } = Astro.props;
+---
+
+<div class:list={['subscribe-form', variant]}>
+  {variant === 'full' && (
+    <div class="subscribe-header">
+      <h2>Stay in the loop</h2>
+      <p>Weekly digest of the most important open source AI projects, tools, and analysis. No spam, just signal.</p>
+    </div>
+  )}
+  <form class="form" action="https://buttondown.com/api/emails/embed-subscribe/letsopenai" method="post" target="_blank">
+    <input
+      type="email"
+      name="email"
+      placeholder="you@example.com"
+      required
+      aria-label="Email address"
+    />
+    <button type="submit" class="btn btn-primary">Subscribe</button>
+  </form>
+  {variant === 'inline' && (
+    <p class="form-note">Free weekly digest. No spam.</p>
+  )}
+</div>
+
+<style>
+  .subscribe-form {
+    width: 100%;
+  }
+
+  .subscribe-header {
+    margin-bottom: 1.5rem;
+  }
+  .subscribe-header h2 {
+    margin-bottom: 0.5rem;
+  }
+  .subscribe-header p {
+    color: var(--text-secondary);
+    max-width: 480px;
+  }
+
+  .form {
+    display: flex;
+    gap: 0.75rem;
+    max-width: 480px;
+  }
+
+  .form input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-family: var(--font-sans);
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+  .form input::placeholder {
+    color: var(--text-muted);
+  }
+  .form input:focus {
+    border-color: var(--accent);
+  }
+
+  .form-note {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .full {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+  }
+
+  @media (max-width: 480px) {
+    .form {
+      flex-direction: column;
+    }
+  }
+</style>

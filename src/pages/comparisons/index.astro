@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+const comparisons = await getCollection('comparisons', ({ data }) => !data.draft);
+const sorted = comparisons.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title="Comparisons" description="Side-by-side comparisons of open source AI tools. Quick verdicts, honest tradeoffs, clear recommendations.">
+  <section class="section">
+    <div class="container">
+      <div class="page-header">
+        <h1>Comparisons</h1>
+        <p>Evaluating tools so you don't have to. Quick verdicts, honest tradeoffs, and clear recommendations for every comparison.</p>
+      </div>
+      <div class="grid-2">
+        {sorted.map(comp => (
+          <ArticleCard
+            title={comp.data.title}
+            description={comp.data.description}
+            href={`/comparisons/${comp.id}`}
+            pubDate={comp.data.pubDate}
+            tags={comp.data.tags}
+            type="comparison"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    margin-bottom: 2.5rem;
+  }
+  .page-header h1 {
+    margin-bottom: 0.75rem;
+  }
+  .page-header p {
+    max-width: 600px;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+  }
+</style>

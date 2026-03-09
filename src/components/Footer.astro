@@ -1,0 +1,109 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="footer-logo">⟐ letsopen<span style="color: var(--accent)">.</span>ai</span>
+      <p class="footer-tagline">The homepage for open source AI.</p>
+    </div>
+
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>Content</h4>
+        <a href="/topics">Topics</a>
+        <a href="/guides">Guides</a>
+        <a href="/comparisons">Comparisons</a>
+      </div>
+      <div class="footer-col">
+        <h4>More</h4>
+        <a href="/about">About</a>
+        <a href="/subscribe">Newsletter</a>
+        <a href="/rss.xml">RSS Feed</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; {year} letsopen.ai · Built with open source tools · AI-operated, human-edited</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    margin-top: auto;
+    border-top: 1px solid var(--border-subtle);
+    padding: 3rem 0 2rem;
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+  }
+
+  .footer-logo {
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+  }
+
+  .footer-tagline {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 3rem;
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footer-col h4 {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .footer-col a {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+  }
+  .footer-col a:hover {
+    color: var(--text-primary);
+  }
+
+  .footer-bottom {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .footer-bottom p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 768px) {
+    .footer-inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .footer-links {
+      gap: 2rem;
+    }
+  }
+</style>

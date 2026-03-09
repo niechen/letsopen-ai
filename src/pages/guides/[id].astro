@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SubscribeForm from '../../components/SubscribeForm.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guides');
+  return guides.map(guide => ({ params: { id: guide.id }, props: { guide } }));
+}
+
+const { guide } = Astro.props;
+const { Content } = await render(guide);
+
+const formattedDate = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}).format(guide.data.pubDate);
+---
+
+<BaseLayout title={guide.data.title} description={guide.data.description} ogType="article">
+  <article class="section">
+    <div class="container content-width">
+      <header class="guide-header">
+        <div class="guide-meta">
+          <span class="tag">Guide</span>
+          <time datetime={guide.data.pubDate.toISOString()}>{formattedDate}</time>
+        </div>
+        <h1>{guide.data.title}</h1>
+        <p class="guide-desc">{guide.data.description}</p>
+      </header>
+
+      <div class="prose">
+        <Content />
+      </div>
+
+      <footer class="guide-footer">
+        {guide.data.tags.length > 0 && (
+          <div class="guide-tags">
+            {guide.data.tags.map(tag => (
+              <span class="tag">{tag}</span>
+            ))}
+          </div>
+        )}
+        <SubscribeForm variant="inline" />
+      </footer>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .guide-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .guide-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .guide-meta time {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  .guide-header h1 {
+    margin-bottom: 0.75rem;
+  }
+  .guide-desc {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .guide-footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .guide-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+</style>

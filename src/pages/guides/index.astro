@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+const guides = await getCollection('guides', ({ data }) => !data.draft);
+const sorted = guides.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title="Guides" description="Practical guides for navigating the open source AI ecosystem. Curated, opinionated, and regularly updated.">
+  <section class="section">
+    <div class="container">
+      <div class="page-header">
+        <h1>Guides</h1>
+        <p>Practical, opinionated guides for builders. Each one is designed to save you time and help you make better decisions.</p>
+      </div>
+      <div class="grid-2">
+        {sorted.map(guide => (
+          <ArticleCard
+            title={guide.data.title}
+            description={guide.data.description}
+            href={`/guides/${guide.id}`}
+            pubDate={guide.data.pubDate}
+            tags={guide.data.tags}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    margin-bottom: 2.5rem;
+  }
+  .page-header h1 {
+    margin-bottom: 0.75rem;
+  }
+  .page-header p {
+    max-width: 600px;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+  }
+</style>

@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TopicCard from '../../components/TopicCard.astro';
+import { getCollection } from 'astro:content';
+
+const hubs = await getCollection('hubs', ({ data }) => !data.draft);
+const sortedHubs = hubs.sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="Topics" description="Explore the open source AI landscape by topic. Deep dives into agents, coding tools, local AI, open models, and more.">
+  <section class="section">
+    <div class="container">
+      <div class="page-header">
+        <h1>Topics</h1>
+        <p>Deep dives into the categories that matter in open source AI. Each topic hub is a living document — updated as the landscape evolves.</p>
+      </div>
+      <div class="grid-3">
+        {sortedHubs.map(hub => (
+          <TopicCard
+            title={hub.data.title}
+            description={hub.data.description}
+            href={`/topics/${hub.id}`}
+            icon={hub.data.icon}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    margin-bottom: 2.5rem;
+  }
+  .page-header h1 {
+    margin-bottom: 0.75rem;
+  }
+  .page-header p {
+    max-width: 600px;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+  }
+</style>
