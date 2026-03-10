@@ -5,3 +5,4 @@ Sitemap: https://letsopen.ai/sitemap-index.xml
 
 # AI agent discovery
 # See also: https://letsopen.ai/llms.txt
+# Structured index: https://letsopen.ai/api/content-index.json

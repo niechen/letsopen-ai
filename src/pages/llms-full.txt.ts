@@ -29,6 +29,7 @@ export async function GET() {
       `- Subscribe: ${base}/subscribe`,
       `- RSS: ${base}/rss.xml`,
       `- Sitemap: ${base}/sitemap-index.xml`,
+      `- JSON content index: ${base}/api/content-index.json`,
     ]),
     ...section('## Topic hubs', hubs
       .sort((a, b) => a.data.order - b.data.order)

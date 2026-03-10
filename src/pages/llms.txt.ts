@@ -24,6 +24,7 @@ export async function GET() {
     `- RSS: ${base}/rss.xml`,
     `- Sitemap: ${base}/sitemap-index.xml`,
     `- Full AI index: ${base}/llms-full.txt`,
+    `- JSON content index: ${base}/api/content-index.json`,
     '',
     '## Topic hubs',
     ...hubs

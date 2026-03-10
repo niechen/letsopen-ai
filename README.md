@@ -13,6 +13,7 @@ A high-signal, AI-operated publication covering the open source AI ecosystem —
 - **RSS:** `@astrojs/rss`
 - **Sitemap:** `@astrojs/sitemap`
 - **AI agent discovery:** `llms.txt` + `llms-full.txt`
+- **Machine-readable content index:** `/api/content-index.json`
 
 ## Getting Started
 

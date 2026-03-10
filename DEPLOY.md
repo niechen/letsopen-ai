@@ -45,6 +45,7 @@
 - [ ] Sitemap at `/sitemap-index.xml`
 - [ ] `robots.txt` accessible
 - [ ] `llms.txt` and `llms-full.txt` accessible
+- [ ] `/api/content-index.json` accessible
 - [ ] 404 page shows custom design
 - [ ] Dark mode default, light mode toggle works
 - [ ] Mobile responsive
