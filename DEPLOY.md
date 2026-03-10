@@ -20,8 +20,23 @@
 
 ## Cloudflare Pages Setup
 
+### GitHub Actions auto-deploy (recommended)
+
+This repo includes `.github/workflows/deploy-cloudflare-pages.yml`.
+
+Required GitHub configuration:
+- [ ] Repo secret: `CLOUDFLARE_API_TOKEN`
+- [ ] Repo variable: `CLOUDFLARE_ACCOUNT_ID`
+- [ ] Repo variable: `CLOUDFLARE_PAGES_PROJECT` (set to `letsopen-ai`)
+
+Behavior:
+- pushes to `main` deploy production
+- pull requests deploy preview builds to a matching Pages branch
+
+### Manual Pages setup / fallback
+
 1. [ ] Go to **Cloudflare Dashboard → Pages → Create a project**
-2. [ ] Connect GitHub repo
+2. [ ] Connect GitHub repo (optional if using manual deploys)
 3. [ ] Configure build:
    - **Framework preset:** Astro
    - **Build command:** `npm run build`

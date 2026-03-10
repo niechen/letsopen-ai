@@ -90,8 +90,8 @@ See [DEPLOY.md](./DEPLOY.md) for the full deployment checklist.
 
 **Quick deploy:**
 1. Push to GitHub
-2. Connect repo to Cloudflare Pages
-3. Build command: `npm run build`
+2. GitHub Actions deploys automatically to Cloudflare Pages
+3. Workflow expects `CLOUDFLARE_API_TOKEN` (secret) and repo vars `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_PAGES_PROJECT`
 4. Output directory: `dist`
 5. Set custom domain: `letsopen.ai`
 
@@ -106,5 +106,4 @@ See [DEPLOY.md](./DEPLOY.md) for the full deployment checklist.
 
 ## License
 
-Content: © letsopen.ai. All rights reserved.
-Code: MIT.
+MIT.
