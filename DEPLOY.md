@@ -61,6 +61,7 @@ Behavior:
 - [ ] `robots.txt` accessible
 - [ ] `llms.txt` and `llms-full.txt` accessible
 - [ ] `/api/content-index.json` accessible
+- [ ] `/agent-manifest.json` and `/agent/.../*.txt` endpoints accessible
 - [ ] 404 page shows custom design
 - [ ] Dark mode default, light mode toggle works
 - [ ] Mobile responsive

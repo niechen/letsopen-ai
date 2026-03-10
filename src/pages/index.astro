@@ -25,6 +25,25 @@ const recentGuides = allGuides
 const recentComparisons = allComparisons
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 2);
+
+const movementPrinciples = [
+  {
+    title: 'Transparency',
+    description: 'People should be able to inspect the systems they depend on.',
+  },
+  {
+    title: 'Security',
+    description: 'Open systems can be audited, constrained, and adapted to real-world needs.',
+  },
+  {
+    title: 'Sovereignty',
+    description: 'Builders and organizations should be able to run AI on their own terms.',
+  },
+  {
+    title: 'Access',
+    description: 'The future of AI should not belong only to the largest closed platforms.',
+  },
+];
 ---
 
 <BaseLayout title="Home">
@@ -70,6 +89,27 @@ const recentComparisons = allComparisons
       </div>
     </section>
   )}
+
+  <!-- Why open matters -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header section-header-stack">
+        <div>
+          <div class="section-label">Why open matters</div>
+          <h2>Open AI is about more than code.</h2>
+        </div>
+        <p class="section-intro">It is about trust, transparency, control, and making AI something people can actually govern.</p>
+      </div>
+      <div class="grid-4">
+        {movementPrinciples.map((item) => (
+          <div class="card principle-card">
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
 
   <!-- Topic Hubs -->
   <section class="section">
@@ -145,6 +185,24 @@ const recentComparisons = allComparisons
               tags={comp.data.tags}
             />
           ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Operating model -->
+  <section class="section">
+    <div class="container">
+      <div class="operating-model card">
+        <div>
+          <div class="section-label">How this site works</div>
+          <h2>AI-operated. Human-edited. Open by design.</h2>
+          <p>
+            Let's Open uses AI to monitor the ecosystem, draft structured coverage, maintain machine-readable discovery layers, and keep the site current. Human judgment still decides what deserves trust, attention, and publication.
+          </p>
+        </div>
+        <div class="operating-actions">
+          <a href="/how-we-work" class="btn btn-outline">See the operating model</a>
         </div>
       </div>
     </div>
@@ -229,6 +287,16 @@ const recentComparisons = allComparisons
     align-items: baseline;
     justify-content: space-between;
     margin-bottom: 1.5rem;
+    gap: 1.5rem;
+  }
+  .section-header-stack {
+    align-items: end;
+  }
+  .section-intro {
+    max-width: 420px;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin: 0;
   }
   .section-link {
     font-size: 0.875rem;
@@ -279,6 +347,33 @@ const recentComparisons = allComparisons
     color: var(--accent);
   }
 
+  .principle-card h3 {
+    margin-bottom: 0.5rem;
+  }
+  .principle-card p {
+    margin-bottom: 0;
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+  }
+
+  .operating-model {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 2rem;
+  }
+  .operating-model h2 {
+    margin-bottom: 0.75rem;
+  }
+  .operating-model p {
+    max-width: 700px;
+    margin-bottom: 0;
+  }
+  .operating-actions {
+    flex-shrink: 0;
+  }
+
   @media (max-width: 768px) {
     .hero .container {
       flex-direction: column;
@@ -296,6 +391,14 @@ const recentComparisons = allComparisons
     }
     .featured-card {
       padding: 1.5rem;
+    }
+    .section-header-stack {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+    .operating-model {
+      flex-direction: column;
+      align-items: flex-start;
     }
   }
 </style>

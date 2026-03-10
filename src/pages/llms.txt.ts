@@ -25,6 +25,8 @@ export async function GET() {
     `- Sitemap: ${base}/sitemap-index.xml`,
     `- Full AI index: ${base}/llms-full.txt`,
     `- JSON content index: ${base}/api/content-index.json`,
+    `- Agent manifest: ${base}/agent-manifest.json`,
+    `- Token-efficient agent content: ${base}/agent/articles/{id}.txt`,
     '',
     '## Topic hubs',
     ...hubs

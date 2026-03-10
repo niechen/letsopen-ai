@@ -30,6 +30,7 @@ export async function GET() {
       `- RSS: ${base}/rss.xml`,
       `- Sitemap: ${base}/sitemap-index.xml`,
       `- JSON content index: ${base}/api/content-index.json`,
+      `- Agent manifest: ${base}/agent-manifest.json`,
     ]),
     ...section('## Topic hubs', hubs
       .sort((a, b) => a.data.order - b.data.order)

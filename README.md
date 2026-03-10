@@ -14,6 +14,7 @@ A high-signal, AI-operated publication covering the open source AI ecosystem —
 - **Sitemap:** `@astrojs/sitemap`
 - **AI agent discovery:** `llms.txt` + `llms-full.txt`
 - **Machine-readable content index:** `/api/content-index.json`
+- **Agent manifest + token-efficient text mirrors:** `/agent-manifest.json`, `/agent/.../*.txt`
 
 ## Getting Started
 
