@@ -14,9 +14,22 @@ const { Content } = await render(hub);
 
 const articles = await getCollection('articles', ({ data }) => !data.draft && data.hub === hub.id);
 const sortedArticles = articles.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: hub.data.title,
+  description: hub.data.description,
+  url: Astro.url.href,
+  about: sortedArticles.map((article) => ({
+    '@type': 'Thing',
+    name: article.data.title,
+    url: `${Astro.site}articles/${article.id}`,
+  })),
+};
 ---
 
-<BaseLayout title={hub.data.title} description={hub.data.description} ogType="article">
+<BaseLayout title={hub.data.title} description={hub.data.description} ogType="article" schema={schema}>
   <article class="section">
     <div class="container content-width">
       <div class="hub-header">

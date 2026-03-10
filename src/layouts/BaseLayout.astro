@@ -9,6 +9,7 @@ interface Props {
   ogImage?: string;
   ogType?: string;
   canonicalUrl?: string;
+  schema?: any;
 }
 
 const {
@@ -17,6 +18,7 @@ const {
   ogImage = '/og-default.svg',
   ogType = 'website',
   canonicalUrl,
+  schema,
 } = Astro.props;
 
 const siteTitle = title === 'Home' ? "Let's Open — Open AI people can trust" : `${title} — Let's Open`;
@@ -60,6 +62,10 @@ const canonical = canonicalUrl || Astro.url.href;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    {schema && (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    )}
 
     <!-- Theme toggle (prevent flash) -->
     <script is:inline>

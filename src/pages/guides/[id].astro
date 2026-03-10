@@ -16,9 +16,28 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
   month: 'long',
   day: 'numeric',
 }).format(guide.data.pubDate);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: guide.data.title,
+  description: guide.data.description,
+  datePublished: guide.data.pubDate.toISOString(),
+  dateModified: guide.data.updatedDate?.toISOString() ?? guide.data.pubDate.toISOString(),
+  author: {
+    '@type': 'Organization',
+    name: 'Let\'s Open',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Let\'s Open',
+  },
+  mainEntityOfPage: Astro.url.href,
+  keywords: guide.data.tags?.join(', ') ?? '',
+};
 ---
 
-<BaseLayout title={guide.data.title} description={guide.data.description} ogType="article">
+<BaseLayout title={guide.data.title} description={guide.data.description} ogType="article" schema={schema}>
   <article class="section">
     <div class="container content-width">
       <header class="guide-header">

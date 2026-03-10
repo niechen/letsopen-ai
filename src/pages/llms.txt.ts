@@ -26,6 +26,7 @@ export async function GET() {
     `- Full AI index: ${base}/llms-full.txt`,
     `- JSON content index: ${base}/api/content-index.json`,
     `- Agent manifest: ${base}/agent-manifest.json`,
+    `- Search API: ${base}/api/search.json?q={query}`,
     `- Token-efficient agent content: ${base}/agent/articles/{id}.txt`,
     '',
     '## Topic hubs',

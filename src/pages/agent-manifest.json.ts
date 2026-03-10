@@ -18,6 +18,7 @@ export async function GET() {
       llms: `${base}/llms.txt`,
       llmsFull: `${base}/llms-full.txt`,
       contentIndex: `${base}/api/content-index.json`,
+      search: `${base}/api/search.json?q={query}`,
       rss: `${base}/rss.xml`,
       sitemap: `${base}/sitemap-index.xml`,
     },
