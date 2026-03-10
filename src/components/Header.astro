@@ -20,6 +20,10 @@ const navLinks = [
         <a href={link.href} class="nav-link">{link.label}</a>
       ))}
       <a href="/subscribe" class="btn btn-primary btn-sm">Subscribe</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle color theme" title="Toggle color theme">
+        <span class="theme-icon theme-icon-dark">☀︎</span>
+        <span class="theme-icon theme-icon-light">☾</span>
+      </button>
     </nav>
 
     <button class="mobile-toggle" aria-label="Toggle menu" aria-expanded="false">
@@ -94,6 +98,34 @@ const navLinks = [
     font-size: 0.8rem;
   }
 
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+  }
+  .theme-toggle:hover {
+    border-color: var(--accent);
+    background: var(--bg-card-hover);
+    transform: translateY(-1px);
+  }
+  .theme-icon-light {
+    display: none;
+  }
+  [data-theme="light"] .theme-icon-dark {
+    display: none;
+  }
+  [data-theme="light"] .theme-icon-light {
+    display: inline;
+  }
+
   .mobile-toggle {
     display: none;
     flex-direction: column;
@@ -135,11 +167,19 @@ const navLinks = [
 </style>
 
 <script>
-  const toggle = document.querySelector('.mobile-toggle');
+  const mobileToggle = document.querySelector('.mobile-toggle');
   const nav = document.querySelector('.nav');
-  toggle?.addEventListener('click', () => {
+  mobileToggle?.addEventListener('click', () => {
     nav?.classList.toggle('open');
-    const expanded = toggle.getAttribute('aria-expanded') === 'true';
-    toggle.setAttribute('aria-expanded', String(!expanded));
+    const expanded = mobileToggle.getAttribute('aria-expanded') === 'true';
+    mobileToggle.setAttribute('aria-expanded', String(!expanded));
+  });
+
+  const themeToggle = document.querySelector('.theme-toggle');
+  themeToggle?.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme') || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
   });
 </script>

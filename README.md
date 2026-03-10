@@ -12,6 +12,7 @@ A high-signal, AI-operated publication covering the open source AI ecosystem —
 - **Styling:** Vanilla CSS (dark-first, responsive)
 - **RSS:** `@astrojs/rss`
 - **Sitemap:** `@astrojs/sitemap`
+- **AI agent discovery:** `llms.txt` + `llms-full.txt`
 
 ## Getting Started
 

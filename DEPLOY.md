@@ -44,6 +44,7 @@
 - [ ] RSS feed at `/rss.xml`
 - [ ] Sitemap at `/sitemap-index.xml`
 - [ ] `robots.txt` accessible
+- [ ] `llms.txt` and `llms-full.txt` accessible
 - [ ] 404 page shows custom design
 - [ ] Dark mode default, light mode toggle works
 - [ ] Mobile responsive
