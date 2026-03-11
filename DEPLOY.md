@@ -1,100 +1,120 @@
-# Deployment Checklist — letsopen.ai
+# Deployment & Operations — Let's Open
 
-## Prerequisites
+## Current deployment status
 
-- [ ] GitHub repo created (public or private)
-- [ ] Cloudflare account with Pages access
-- [ ] Domain `letsopen.ai` managed in Cloudflare DNS
+The project is already set up.
 
-## GitHub Setup
+### Current state
+- GitHub repo exists: `niechen/letsopen-ai`
+- Cloudflare Pages project exists: `letsopen-ai`
+- GitHub Actions auto deploy is configured
+- Repo variables are configured:
+  - `CLOUDFLARE_ACCOUNT_ID`
+  - `CLOUDFLARE_PAGES_PROJECT`
+- Repo secret required for deploys:
+  - `CLOUDFLARE_API_TOKEN`
 
-1. [ ] Initialize git and push:
-   ```bash
-   cd letsopen-ai-site
-   git init
-   git add .
-   git commit -m "Initial site build"
-   git remote add origin git@github.com:<org>/letsopen-ai-site.git
-   git push -u origin main
-   ```
+## Auto-deploy workflow
 
-## Cloudflare Pages Setup
-
-### GitHub Actions auto-deploy (recommended)
-
-This repo includes `.github/workflows/deploy-cloudflare-pages.yml`.
-
-Required GitHub configuration:
-- [ ] Repo secret: `CLOUDFLARE_API_TOKEN`
-- [ ] Repo variable: `CLOUDFLARE_ACCOUNT_ID`
-- [ ] Repo variable: `CLOUDFLARE_PAGES_PROJECT` (set to `letsopen-ai`)
+Workflow file:
+- `.github/workflows/deploy-cloudflare-pages.yml`
 
 Behavior:
 - pushes to `main` deploy production
-- pull requests deploy preview builds to a matching Pages branch
+- pull requests deploy preview branches
 
-### Manual Pages setup / fallback
+## Required GitHub configuration
 
-1. [ ] Go to **Cloudflare Dashboard → Pages → Create a project**
-2. [ ] Connect GitHub repo (optional if using manual deploys)
-3. [ ] Configure build:
-   - **Framework preset:** Astro
-   - **Build command:** `npm run build`
-   - **Build output directory:** `dist`
-   - **Node.js version:** 20+ (set `NODE_VERSION=20` in environment variables if needed)
-4. [ ] Deploy
+### Repo variables
+- `CLOUDFLARE_ACCOUNT_ID`
+- `CLOUDFLARE_PAGES_PROJECT=letsopen-ai`
 
-## Custom Domain
+### Repo secret
+- `CLOUDFLARE_API_TOKEN`
 
-1. [ ] In Cloudflare Pages project → **Custom domains**
-2. [ ] Add `letsopen.ai`
-3. [ ] Add `www.letsopen.ai` (redirect to apex)
-4. [ ] Verify DNS records are set (Cloudflare auto-configures if domain is on CF)
+## Important credential decision
 
-## Post-Deploy Checks
+Use a **dedicated Cloudflare API Token for Pages deployments**.
 
-- [ ] Homepage loads at `https://letsopen.ai`
-- [ ] All navigation links work
-- [ ] Article/guide/comparison pages render
-- [ ] RSS feed at `/rss.xml`
-- [ ] Sitemap at `/sitemap-index.xml`
-- [ ] `robots.txt` accessible
-- [ ] `llms.txt` and `llms-full.txt` accessible
-- [ ] `/api/content-index.json` accessible
-- [ ] `/agent-manifest.json` and `/agent/.../*.txt` endpoints accessible
-- [ ] 404 page shows custom design
-- [ ] Dark mode default, light mode toggle works
-- [ ] Mobile responsive
-- [ ] Open Graph tags render (test with https://opengraph.dev)
-- [ ] Subscribe form submits to Buttondown
+Do **not** rely on:
+- local Wrangler session tokens
+- Workers AI-only tokens
+- copied temporary CLI auth material
 
-## Newsletter (Buttondown)
+### Correct token type
+Use a token with permission scope that can manage **Cloudflare Pages deployments** for the target account.
 
-1. [ ] Create Buttondown account at https://buttondown.com
-2. [ ] Set publication name to `letsopenai` (or update form action URL in `SubscribeForm.astro`)
-3. [ ] Configure welcome email
-4. [ ] Test subscribe flow end-to-end
+At minimum, it must be able to:
+- access the Pages project
+- create/update Pages deployments
+
+If deploys fail with Cloudflare auth error `10000`, the most likely cause is that the token exists but does not have the correct Pages permissions.
+
+## Setting the GitHub secret
+
+Interactive:
+
+```bash
+gh secret set CLOUDFLARE_API_TOKEN --repo niechen/letsopen-ai
+```
+
+## Manual local deploy fallback
+
+If needed, the site can still be deployed directly with Wrangler:
+
+```bash
+npm run build
+wrangler pages deploy dist --project-name letsopen-ai
+```
+
+## Custom domain
+
+Planned production domain:
+- `letsopen.ai`
+
+Likely next DNS/domain tasks when ready:
+1. add the custom domain to the Pages project
+2. point apex/root appropriately in Cloudflare
+3. optionally redirect `www` to apex
+
+## Post-deploy verification checklist
+
+### Human-facing
+- homepage loads
+- topic hubs render correctly
+- article/guide/comparison pages render correctly
+- navigation works
+- theme toggle works
+- mobile layout looks clean
+- OG metadata is present
+
+### Machine-facing
+- `/llms.txt`
+- `/llms-full.txt`
+- `/agent-manifest.json`
+- `/api/content-index.json`
+- `/api/search.json?q=open source ai`
+- `/agent/.../*.txt`
+- `/rss.xml`
+- `/sitemap-index.xml`
+- `robots.txt`
+
+## Newsletter / subscriptions
+
+Current implementation assumes Buttondown embed flow.
+
+If the Buttondown publication handle changes, update the form action in:
+- `src/components/SubscribeForm.astro`
 
 ## Analytics
 
-1. [ ] Enable **Cloudflare Web Analytics** in dashboard
-2. [ ] Verify data collection after deploy
+Recommended:
+- Cloudflare Web Analytics
 
-## Optional: Cloudflare Workers
+This is not a blocker for launch, but should be added before broader traffic push.
 
-If you need server-side form handling instead of direct Buttondown embed:
-1. Create a Worker for `/api/subscribe`
-2. Proxy to Buttondown API
-3. Add rate limiting
+## Future operational improvements
 
-## OG Image
-
-- [ ] Create `public/og-default.png` (1200×630px) with site branding
-- [ ] Per-article OG images can be added later via `heroImage` frontmatter
-
-## Go Live
-
-1. [ ] Final content review
-2. [ ] Check all links
-3. [ ] Deploy production
-4. [ ] Announce 🚀
+- upgrade GitHub workflow actions if needed for future GitHub runtime changes
+- add custom domain once final review is complete
+- optionally add richer semantic retrieval infrastructure later (for example a Worker-backed search/retrieval layer)

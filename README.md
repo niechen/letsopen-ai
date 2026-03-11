@@ -1,109 +1,123 @@
-# letsopen.ai
+# Let's Open
 
-**The homepage for open source AI.**
+**Open source AI people can trust.**
 
-A high-signal, AI-operated publication covering the open source AI ecosystem — projects, tools, models, agents, and infrastructure that matter.
+Let's Open is an AI-operated, human-edited website about the open source AI ecosystem: agents, tools, models, infrastructure, workflows, and the broader case for open source AI.
 
-## Tech Stack
+This repo contains the live site for **letsopen.ai**.
 
-- **Framework:** [Astro](https://astro.build) (static site, zero JS by default)
+## Current status
+
+The project is already live and deployed.
+
+- **GitHub repo:** `niechen/letsopen-ai`
+- **Hosting:** Cloudflare Pages
+- **Framework:** Astro
+- **Auto deploy:** GitHub Actions → Cloudflare Pages
+- **License:** MIT
+
+The site currently includes:
+- homepage + about + subscribe + how-we-work pages
+- 8 topic hubs
+- multiple launch articles, guides, and comparisons
+- RSS + sitemap + robots.txt
+- agent-first discovery surfaces (`llms.txt`, `llms-full.txt`)
+- structured agent endpoints (`/api/content-index.json`, `/api/search.json`, `/agent-manifest.json`, `/agent/.../*.txt`)
+- page-level structured metadata / JSON-LD schema
+
+## Product direction
+
+Let's Open is not just a content site. It is meant to be:
+- a high-signal front door to open source AI
+- a mission-led argument for open source AI as the path to more trustworthy, transparent, secure, sovereign AI systems
+- an **agent-first website** that is easy for both humans and LLMs/agents to consume
+
+## Tech stack
+
+- **Framework:** [Astro](https://astro.build)
 - **Hosting:** [Cloudflare Pages](https://pages.cloudflare.com)
 - **Content:** Markdown in `src/content/`
-- **Styling:** Vanilla CSS (dark-first, responsive)
-- **RSS:** `@astrojs/rss`
-- **Sitemap:** `@astrojs/sitemap`
-- **AI agent discovery:** `llms.txt` + `llms-full.txt`
-- **Machine-readable content index:** `/api/content-index.json`
-- **Agent manifest + token-efficient text mirrors:** `/agent-manifest.json`, `/agent/.../*.txt`
+- **Styling:** Vanilla CSS
+- **Feeds:** `@astrojs/rss`, `@astrojs/sitemap`
+- **Machine-readable surfaces:** `llms.txt`, `llms-full.txt`, JSON APIs, agent text mirrors
 
-## Getting Started
+## Development
 
 ```bash
-# Install dependencies
 npm install
-
-# Start dev server
 npm run dev
-
-# Build for production
 npm run build
-
-# Preview production build
 npm run preview
 ```
 
-## Project Structure
+## Project structure
 
-```
+```text
 src/
-├── content/           # All content (Markdown)
-│   ├── articles/      # Articles and explainers
-│   ├── hubs/          # Topic hub pages
-│   ├── comparisons/   # Side-by-side comparisons
-│   └── guides/        # Evergreen guides
-├── components/        # Astro components
-├── layouts/           # Page layouts
-├── pages/             # Routes
-│   ├── articles/      # Article pages (dynamic)
-│   ├── topics/        # Topic hub pages (dynamic)
-│   ├── guides/        # Guide pages (dynamic)
-│   ├── comparisons/   # Comparison pages (dynamic)
+├── content/
+│   ├── articles/
+│   ├── comparisons/
+│   ├── guides/
+│   └── hubs/
+├── components/
+├── layouts/
+├── pages/
+│   ├── agent/
+│   ├── api/
+│   ├── articles/
+│   ├── comparisons/
+│   ├── guides/
+│   ├── topics/
 │   ├── about.astro
-│   ├── subscribe.astro
-│   └── rss.xml.ts
-├── styles/            # Global CSS
-└── content.config.ts  # Content collection schemas
-public/
-├── favicon.svg
-└── robots.txt
+│   ├── how-we-work.astro
+│   ├── index.astro
+│   ├── llms-full.txt.ts
+│   ├── llms.txt.ts
+│   ├── rss.xml.ts
+│   └── subscribe.astro
+├── styles/
+└── content.config.ts
 ```
 
-## Content Collections
+## Key machine-readable endpoints
 
-| Collection | Schema | Location |
+### Discovery
+- `/llms.txt`
+- `/llms-full.txt`
+- `/agent-manifest.json`
+- `/rss.xml`
+- `/sitemap-index.xml`
+
+### Structured retrieval
+- `/api/content-index.json`
+- `/api/search.json?q=...`
+
+### Token-efficient text mirrors
+- `/agent/articles/{id}.txt`
+- `/agent/guides/{id}.txt`
+- `/agent/comparisons/{id}.txt`
+- `/agent/topics/{id}.txt`
+
+## Content collections
+
+| Collection | Purpose | Location |
 |---|---|---|
-| `articles` | title, description, pubDate, tags, hub, type, featured | `src/content/articles/` |
-| `hubs` | title, description, icon, order | `src/content/hubs/` |
-| `guides` | title, description, pubDate, tags, hub | `src/content/guides/` |
-| `comparisons` | title, description, pubDate, tags, verdict | `src/content/comparisons/` |
-
-## Adding Content
-
-Create a new `.md` file in the appropriate `src/content/` subdirectory with the required frontmatter. The site will auto-generate pages.
-
-Example article:
-```markdown
----
-title: "Your Article Title"
-description: "A brief description"
-pubDate: 2026-03-15
-tags: ["agents", "tools"]
-hub: "open-source-ai-agents"
-type: "article"
----
-
-Your content here...
-```
+| `articles` | editorials, explainers, timely pieces | `src/content/articles/` |
+| `guides` | evergreen practical guides | `src/content/guides/` |
+| `comparisons` | tool/category comparisons | `src/content/comparisons/` |
+| `hubs` | topic hub landing pages | `src/content/hubs/` |
 
 ## Deployment
 
-See [DEPLOY.md](./DEPLOY.md) for the full deployment checklist.
+This repo auto-deploys via GitHub Actions.
 
-**Quick deploy:**
-1. Push to GitHub
-2. GitHub Actions deploys automatically to Cloudflare Pages
-3. Workflow expects `CLOUDFLARE_API_TOKEN` (secret) and repo vars `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_PAGES_PROJECT`
-4. Output directory: `dist`
-5. Set custom domain: `letsopen.ai`
+See [DEPLOY.md](./DEPLOY.md) for operational details.
 
-## Design
+## Planning and project context
 
-- **Dark-first** with light mode toggle
-- **Editorial, modern, typographically strong**
-- Inter font family
-- Indigo accent (#6366f1)
-- Modular card-based layouts
-- Mobile-responsive
+See:
+- [PROJECT_STATUS.md](./PROJECT_STATUS.md) — current status, decisions, progress, next steps
+- [DEPLOY.md](./DEPLOY.md) — deployment and operational notes
 
 ## License
 
