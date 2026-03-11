@@ -4,6 +4,9 @@
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
+  "engines": {
+    "node": ">=20.18.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -11,8 +14,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.17.1",
     "@astrojs/rss": "^4.0.0",
-    "@astrojs/sitemap": "^3.0.0"
+    "@astrojs/sitemap": "^3.0.0",
+    "@fontsource/inter": "^5.2.8",
+    "@fontsource/jetbrains-mono": "^5.2.8",
+    "astro": "^5.17.1"
   }
 }

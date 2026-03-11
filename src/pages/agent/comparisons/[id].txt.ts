@@ -1,4 +1,5 @@
 import { getCollection } from 'astro:content';
+import { markdownToPlainText } from '../../../utils/plain-text';
 
 export async function getStaticPaths() {
   const comparisons = await getCollection('comparisons', ({ data }) => !data.draft);
@@ -16,7 +17,7 @@ export async function GET({ props }: { props: any }) {
     `Verdict: ${comparison.data.verdict ?? ''}`,
     `Tags: ${(comparison.data.tags ?? []).join(', ')}`,
     '',
-    comparison.body,
+    markdownToPlainText(comparison.body),
   ];
 
   return new Response(lines.join('\n'), {
