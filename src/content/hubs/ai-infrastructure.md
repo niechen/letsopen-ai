@@ -5,7 +5,7 @@ icon: "⚙️"
 order: 6
 ---
 
-## Building blocks of open AI
+## Building blocks of open source AI
 
 AI infrastructure is the plumbing that makes everything else possible. It's the tools for training, fine-tuning, serving, monitoring, and deploying AI systems — and the open source ecosystem here is remarkably strong.
 

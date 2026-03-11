@@ -46,7 +46,7 @@ That is how ecosystems compound.
 
 ## What open makes possible
 
-Open AI does not mean chaos. It means:
+Open source AI does not mean chaos. It means:
 
 - inspectable systems
 - adaptable workflows

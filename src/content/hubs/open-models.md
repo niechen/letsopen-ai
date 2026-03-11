@@ -1,6 +1,6 @@
 ---
 title: Open Models
-description: "Open-weight and open-source language models. The foundations that power the open AI ecosystem."
+description: "Open-weight and open-source language models. The foundations that power the open source AI ecosystem."
 icon: "🧠"
 order: 5
 ---
@@ -14,7 +14,7 @@ The good news: open models have never been better. The gap between open and clos
 ## Leading model families
 
 ### Llama (Meta)
-The model family that catalyzed the open AI movement. Llama 3 and 4 series offer competitive performance across reasoning, coding, and general tasks.
+The model family that catalyzed the open source AI movement. Llama 3 and 4 series offer competitive performance across reasoning, coding, and general tasks.
 
 ### Qwen (Alibaba)
 Strong multilingual models with excellent coding performance. Qwen 2.5 and 3 series are top-tier for their size classes.

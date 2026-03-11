@@ -56,4 +56,4 @@ The open source AI agent ecosystem is where the most interesting work is happeni
 
 ---
 
-*This is our flagship piece at letsopen.ai. We'll be covering this space deeply — the projects, the patterns, and the people building the future of open AI agents. [Subscribe](/subscribe) to follow along.*
+*This is our flagship piece at letsopen.ai. We'll be covering this space deeply — the projects, the patterns, and the people building the future of open source AI agents. [Subscribe](/subscribe) to follow along.*
