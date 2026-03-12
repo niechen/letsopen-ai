@@ -1,0 +1,37 @@
+---
+interface Props {
+  label: string;
+  title: string;
+  description: string;
+  pubDate: Date;
+  hub?: string;
+  verdict?: string;
+}
+
+const { label, title, description, pubDate, hub, verdict } = Astro.props;
+
+const formattedDate = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}).format(pubDate);
+---
+
+<header class="content-header">
+  <div class="content-meta">
+    <span class="tag">{label}</span>
+    <time datetime={pubDate.toISOString()}>{formattedDate}</time>
+    {hub && (
+      <a href={`/topics/${hub}`} class="content-hub">
+        {hub.replace(/-/g, ' ')}
+      </a>
+    )}
+  </div>
+  <h1>{title}</h1>
+  <p class="content-desc">{description}</p>
+  {verdict && (
+    <div class="verdict-box">
+      <strong>Quick verdict:</strong> {verdict}
+    </div>
+  )}
+</header>

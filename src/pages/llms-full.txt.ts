@@ -1,10 +1,12 @@
+import type { APIContext } from 'astro';
 import { getCollection } from 'astro:content';
+import { getBaseUrl } from '../utils/base-url';
 
 function section(title: string, lines: string[]) {
   return [title, ...lines, ''];
 }
 
-export async function GET() {
+export async function GET(context: APIContext) {
   const [articles, guides, comparisons, hubs] = await Promise.all([
     getCollection('articles', ({ data }) => !data.draft),
     getCollection('guides', ({ data }) => !data.draft),
@@ -12,7 +14,7 @@ export async function GET() {
     getCollection('hubs', ({ data }) => !data.draft),
   ]);
 
-  const base = 'https://letsopen.ai';
+  const base = getBaseUrl(context);
   const lines = [
     '# letsopen.ai full AI index',
     '',
@@ -31,7 +33,7 @@ export async function GET() {
       `- Sitemap: ${base}/sitemap-index.xml`,
       `- JSON content index: ${base}/api/content-index.json`,
       `- Agent manifest: ${base}/agent-manifest.json`,
-      `- Search API: ${base}/api/search.json?q={query}`,
+      `- Search index (client-side filtering): ${base}/api/search.json`,
     ]),
     ...section('## Topic hubs', hubs
       .sort((a, b) => a.data.order - b.data.order)

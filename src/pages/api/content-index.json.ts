@@ -1,6 +1,8 @@
+import type { APIContext } from 'astro';
 import { getCollection } from 'astro:content';
+import { getBaseUrl } from '../../utils/base-url';
 
-export async function GET() {
+export async function GET(context: APIContext) {
   const [articles, guides, comparisons, hubs] = await Promise.all([
     getCollection('articles', ({ data }) => !data.draft),
     getCollection('guides', ({ data }) => !data.draft),
@@ -8,7 +10,7 @@ export async function GET() {
     getCollection('hubs', ({ data }) => !data.draft),
   ]);
 
-  const base = 'https://letsopen.ai';
+  const base = getBaseUrl(context);
   const payload = {
     site: {
       name: 'letsopen.ai',
@@ -22,7 +24,8 @@ export async function GET() {
         agentManifest: `${base}/agent-manifest.json`,
       },
     },
-    generatedAt: new Date().toISOString(),
+    builtAt: new Date().toISOString(),
+    note: 'builtAt reflects static build time, not request time.',
     counts: {
       hubs: hubs.length,
       articles: articles.length,

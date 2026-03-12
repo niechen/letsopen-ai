@@ -1,6 +1,8 @@
+import type { APIContext } from 'astro';
 import { getCollection } from 'astro:content';
+import { getBaseUrl } from '../utils/base-url';
 
-export async function GET() {
+export async function GET(context: APIContext) {
   const [articles, guides, comparisons, hubs] = await Promise.all([
     getCollection('articles', ({ data }) => !data.draft),
     getCollection('guides', ({ data }) => !data.draft),
@@ -8,7 +10,7 @@ export async function GET() {
     getCollection('hubs', ({ data }) => !data.draft),
   ]);
 
-  const base = 'https://letsopen.ai';
+  const base = getBaseUrl(context);
   const lines = [
     '# letsopen.ai',
     '',
@@ -26,7 +28,7 @@ export async function GET() {
     `- Full AI index: ${base}/llms-full.txt`,
     `- JSON content index: ${base}/api/content-index.json`,
     `- Agent manifest: ${base}/agent-manifest.json`,
-    `- Search API: ${base}/api/search.json?q={query}`,
+    `- Search index (client-side filtering): ${base}/api/search.json`,
     `- Token-efficient agent content: ${base}/agent/articles/{id}.txt`,
     '',
     '## Topic hubs',

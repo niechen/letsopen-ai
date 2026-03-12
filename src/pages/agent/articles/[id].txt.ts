@@ -1,4 +1,5 @@
 import { getCollection } from 'astro:content';
+import { markdownToPlainText } from '../../../utils/plain-text';
 
 export async function getStaticPaths() {
   const articles = await getCollection('articles', ({ data }) => !data.draft);
@@ -16,7 +17,7 @@ export async function GET({ props }: { props: any }) {
     `Hub: ${article.data.hub ?? ''}`,
     `Tags: ${(article.data.tags ?? []).join(', ')}`,
     '',
-    article.body,
+    markdownToPlainText(article.body),
   ];
 
   return new Response(lines.join('\n'), {
