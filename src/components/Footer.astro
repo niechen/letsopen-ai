@@ -1,8 +1,8 @@
 <footer class="footer">
   <div class="container footer-inner">
     <div class="footer-brand">
-      <span class="footer-logo">⟐ letsopen<span style="color: var(--accent)">.</span>ai</span>
-      <p class="footer-tagline">The homepage for open source AI.</p>
+      <span class="footer-logo">⟐ letsopen<span class="logo-dot">.</span>ai</span>
+      <p class="footer-tagline">High-signal coverage for open source AI builders.</p>
     </div>
 
     <div class="footer-links">
@@ -22,7 +22,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p>Built with open source tools · MIT licensed · AI-operated, human-edited</p>
+      <p>AI-operated, human-edited. Open by design. MIT licensed.</p>
     </div>
   </div>
 </footer>
@@ -30,67 +30,78 @@
 <style>
   .footer {
     margin-top: auto;
-    border-top: 1px solid var(--border-subtle);
-    padding: 3rem 0 2rem;
+    border-top: 1px solid var(--border);
+    padding: 3.2rem 0 2rem;
+    background: color-mix(in srgb, var(--bg-secondary) 70%, transparent);
   }
 
   .footer-inner {
     display: grid;
     grid-template-columns: 1fr auto;
-    gap: 3rem;
+    gap: 2.8rem;
   }
 
   .footer-logo {
-    font-weight: 800;
-    font-size: 1.1rem;
-    letter-spacing: -0.03em;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
     color: var(--text-primary);
   }
 
+  .logo-dot {
+    color: var(--accent);
+  }
+
   .footer-tagline {
-    margin-top: 0.5rem;
-    font-size: 0.875rem;
+    margin-top: 0.55rem;
+    font-size: 0.92rem;
     color: var(--text-muted);
+    max-width: 360px;
   }
 
   .footer-links {
     display: flex;
-    gap: 3rem;
+    gap: 2.6rem;
   }
 
   .footer-col {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.55rem;
   }
 
   .footer-col h4 {
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: 0.72rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.11em;
     color: var(--text-muted);
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
   }
 
   .footer-col a {
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     color: var(--text-secondary);
+    transition: color 0.15s ease;
   }
+
   .footer-col a:hover {
-    color: var(--text-primary);
+    color: var(--accent);
   }
 
   .footer-bottom {
     grid-column: 1 / -1;
     border-top: 1px solid var(--border-subtle);
-    padding-top: 1.5rem;
-    margin-top: 1rem;
+    padding-top: 1.4rem;
+    margin-top: 0.35rem;
   }
 
   .footer-bottom p {
     font-size: 0.8rem;
+    letter-spacing: 0.02em;
     color: var(--text-muted);
+    margin: 0;
   }
 
   @media (max-width: 768px) {
@@ -100,7 +111,8 @@
     }
 
     .footer-links {
-      gap: 2rem;
+      gap: 1.8rem;
+      flex-wrap: wrap;
     }
   }
 </style>

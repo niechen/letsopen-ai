@@ -7,6 +7,13 @@ const navLinks = [
   { href: '/how-we-work', label: 'How We Work' },
   { href: '/about', label: 'About' },
 ];
+
+const pathname = Astro.url.pathname;
+
+const isActive = (href: string) => {
+  if (href === '/') return pathname === '/';
+  return pathname === href || pathname.startsWith(`${href}/`);
+};
 ---
 
 <header class="header">
@@ -18,12 +25,12 @@ const navLinks = [
 
     <nav class="nav" aria-label="Main navigation">
       {navLinks.map(link => (
-        <a href={link.href} class="nav-link">{link.label}</a>
+        <a href={link.href} class:list={['nav-link', { active: isActive(link.href) }]}>{link.label}</a>
       ))}
       <a href="/subscribe" class="btn btn-primary btn-sm">Subscribe</a>
       <button class="theme-toggle" type="button" aria-label="Toggle color theme" title="Toggle color theme">
-        <span class="theme-icon theme-icon-dark">☀︎</span>
-        <span class="theme-icon theme-icon-light">☾</span>
+        <span class="theme-icon theme-icon-dark">☾</span>
+        <span class="theme-icon theme-icon-light">☀</span>
       </button>
     </nav>
 
@@ -40,15 +47,11 @@ const navLinks = [
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(10, 10, 11, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border-subtle);
     height: var(--nav-height);
-  }
-
-  [data-theme="light"] .header {
-    background: rgba(255, 255, 255, 0.85);
+    border-bottom: 1px solid var(--border);
+    background: color-mix(in srgb, var(--bg-primary) 88%, transparent);
+    backdrop-filter: blur(14px) saturate(1.2);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
   }
 
   .header-inner {
@@ -56,6 +59,7 @@ const navLinks = [
     align-items: center;
     justify-content: space-between;
     height: 100%;
+    gap: 1rem;
   }
 
   .logo {
@@ -63,14 +67,18 @@ const navLinks = [
     align-items: center;
     gap: 0.5rem;
     color: var(--text-primary);
-    font-weight: 800;
-    font-size: 1.15rem;
-    letter-spacing: -0.03em;
+    font-family: var(--font-display);
+    font-size: 1.14rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
   }
-  .logo:hover { color: var(--text-primary); }
+
+  .logo:hover {
+    color: var(--text-primary);
+  }
 
   .logo-mark {
-    font-size: 1.4rem;
+    font-size: 1.35rem;
     color: var(--accent);
   }
 
@@ -81,49 +89,81 @@ const navLinks = [
   .nav {
     display: flex;
     align-items: center;
-    gap: 1.75rem;
+    gap: 1.2rem;
   }
 
   .nav-link {
+    position: relative;
     color: var(--text-secondary);
-    font-size: 0.875rem;
-    font-weight: 500;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3rem 0;
     transition: color 0.15s ease;
   }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.35rem;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+
   .nav-link:hover {
     color: var(--text-primary);
   }
 
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    transform: scaleX(1);
+  }
+
+  .nav-link.active {
+    color: var(--text-primary);
+  }
+
   .btn-sm {
-    padding: 0.45rem 1rem;
-    font-size: 0.8rem;
+    padding: 0.46rem 0.9rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
 
   .theme-toggle {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.4rem;
-    height: 2.4rem;
+    width: 2.2rem;
+    height: 2.2rem;
     border-radius: 999px;
     border: 1px solid var(--border);
     background: var(--bg-card);
     color: var(--text-primary);
     cursor: pointer;
-    transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+    transition: border-color 0.15s ease, transform 0.15s ease;
   }
+
   .theme-toggle:hover {
     border-color: var(--accent);
-    background: var(--bg-card-hover);
     transform: translateY(-1px);
   }
+
   .theme-icon-light {
     display: none;
   }
-  [data-theme="light"] .theme-icon-dark {
+
+  [data-theme='dark'] .theme-icon-dark {
     display: none;
   }
-  [data-theme="light"] .theme-icon-light {
+
+  [data-theme='dark'] .theme-icon-light {
     display: inline;
   }
 
@@ -134,35 +174,45 @@ const navLinks = [
     background: none;
     border: none;
     cursor: pointer;
-    padding: 4px;
+    padding: 6px;
   }
+
   .mobile-toggle span {
     display: block;
     width: 22px;
     height: 2px;
     background: var(--text-primary);
-    border-radius: 1px;
+    border-radius: 999px;
     transition: 0.2s;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     .nav {
       display: none;
       position: absolute;
-      top: var(--nav-height);
+      top: calc(var(--nav-height) - 1px);
       left: 0;
       right: 0;
       flex-direction: column;
-      background: var(--bg-primary);
+      align-items: flex-start;
+      background: color-mix(in srgb, var(--bg-primary) 92%, transparent);
       border-bottom: 1px solid var(--border);
-      padding: 1.5rem;
-      gap: 1rem;
+      padding: 1.1rem 1rem 1.4rem;
+      gap: 0.8rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
+
     .nav.open {
       display: flex;
     }
+
     .mobile-toggle {
       display: flex;
+    }
+
+    .btn-sm {
+      margin-top: 0.35rem;
     }
   }
 </style>
@@ -170,15 +220,23 @@ const navLinks = [
 <script>
   const mobileToggle = document.querySelector('.mobile-toggle');
   const nav = document.querySelector('.nav');
+
   mobileToggle?.addEventListener('click', () => {
     nav?.classList.toggle('open');
     const expanded = mobileToggle.getAttribute('aria-expanded') === 'true';
     mobileToggle.setAttribute('aria-expanded', String(!expanded));
   });
 
+  nav?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('open');
+      mobileToggle?.setAttribute('aria-expanded', 'false');
+    });
+  });
+
   const themeToggle = document.querySelector('.theme-toggle');
   themeToggle?.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme') || 'dark';
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
     const next = current === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', next);
     localStorage.setItem('theme', next);
