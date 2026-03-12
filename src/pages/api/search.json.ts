@@ -1,13 +1,8 @@
+import type { APIContext } from 'astro';
 import { getCollection } from 'astro:content';
+import { getBaseUrl } from '../../utils/base-url';
 
-function includes(haystack: string, needle: string) {
-  return haystack.toLowerCase().includes(needle.toLowerCase());
-}
-
-export async function GET({ url }: { url: URL }) {
-  const q = (url.searchParams.get('q') || '').trim();
-  const type = (url.searchParams.get('type') || '').trim();
-  const limit = Math.min(Number(url.searchParams.get('limit') || '10'), 50);
+export async function GET(context: APIContext) {
 
   const [articles, guides, comparisons, hubs] = await Promise.all([
     getCollection('articles', ({ data }) => !data.draft),
@@ -16,8 +11,8 @@ export async function GET({ url }: { url: URL }) {
     getCollection('hubs', ({ data }) => !data.draft),
   ]);
 
-  const base = 'https://letsopen.ai';
-  const items = [
+  const base = getBaseUrl(context);
+  const results = [
     ...articles.map((item) => ({
       kind: 'article',
       id: item.id,
@@ -27,7 +22,8 @@ export async function GET({ url }: { url: URL }) {
       url: `${base}/articles/${item.id}`,
       machineUrl: `${base}/agent/articles/${item.id}.txt`,
       date: item.data.pubDate.toISOString(),
-      text: `${item.data.title} ${item.data.description} ${(item.data.tags ?? []).join(' ')} ${item.data.hub ?? ''}`,
+      keywords: [item.data.title, item.data.description, ...(item.data.tags ?? []), item.data.hub ?? '']
+        .filter(Boolean),
     })),
     ...guides.map((item) => ({
       kind: 'guide',
@@ -38,7 +34,8 @@ export async function GET({ url }: { url: URL }) {
       url: `${base}/guides/${item.id}`,
       machineUrl: `${base}/agent/guides/${item.id}.txt`,
       date: item.data.pubDate.toISOString(),
-      text: `${item.data.title} ${item.data.description} ${(item.data.tags ?? []).join(' ')} ${item.data.hub ?? ''}`,
+      keywords: [item.data.title, item.data.description, ...(item.data.tags ?? []), item.data.hub ?? '']
+        .filter(Boolean),
     })),
     ...comparisons.map((item) => ({
       kind: 'comparison',
@@ -49,7 +46,8 @@ export async function GET({ url }: { url: URL }) {
       url: `${base}/comparisons/${item.id}`,
       machineUrl: `${base}/agent/comparisons/${item.id}.txt`,
       date: item.data.pubDate.toISOString(),
-      text: `${item.data.title} ${item.data.description} ${(item.data.tags ?? []).join(' ')} ${item.data.verdict ?? ''}`,
+      keywords: [item.data.title, item.data.description, ...(item.data.tags ?? []), item.data.verdict ?? '']
+        .filter(Boolean),
     })),
     ...hubs.map((item) => ({
       kind: 'hub',
@@ -60,34 +58,26 @@ export async function GET({ url }: { url: URL }) {
       url: `${base}/topics/${item.id}`,
       machineUrl: `${base}/agent/topics/${item.id}.txt`,
       date: null,
-      text: `${item.data.title} ${item.data.description}`,
+      keywords: [item.data.title, item.data.description].filter(Boolean),
     })),
-  ];
-
-  let filtered = items;
-  if (type) filtered = filtered.filter((item) => item.kind === type);
-  if (q) filtered = filtered.filter((item) => includes(item.text, q));
-
-  filtered = filtered
+  ]
     .sort((a, b) => {
       if (!a.date && !b.date) return 0;
       if (!a.date) return 1;
       if (!b.date) return -1;
       return b.date.localeCompare(a.date);
-    })
-    .slice(0, limit)
-    .map(({ text, ...rest }) => rest);
+    });
 
   return new Response(JSON.stringify({
-    query: q,
-    type: type || null,
-    limit,
-    count: filtered.length,
-    results: filtered,
+    searchMode: 'client-side',
+    queryParamSupport: false,
+    note: 'This static endpoint returns a searchable corpus; filter results client-side.',
+    count: results.length,
+    results,
   }, null, 2), {
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
-      'Cache-Control': 'public, max-age=120',
+      'Cache-Control': 'public, max-age=300',
     },
   });
 }

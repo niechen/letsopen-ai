@@ -1,21 +1,16 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import SubscribeForm from '../../components/SubscribeForm.astro';
+import ContentHeader from '../../components/ContentHeader.astro';
+import ContentFooter from '../../components/ContentFooter.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
-  const articles = await getCollection('articles');
+  const articles = await getCollection('articles', ({ data }) => !data.draft);
   return articles.map(article => ({ params: { id: article.id }, props: { article } }));
 }
 
 const { article } = Astro.props;
 const { Content } = await render(article);
-
-const formattedDate = new Intl.DateTimeFormat('en-US', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-}).format(article.data.pubDate);
 
 const schema = {
   '@context': 'https://schema.org',
@@ -40,77 +35,19 @@ const schema = {
 <BaseLayout title={article.data.title} description={article.data.description} ogType="article" schema={schema}>
   <article class="section">
     <div class="container content-width">
-      <header class="article-header">
-        <div class="article-meta">
-          <span class="tag">{article.data.type}</span>
-          <time datetime={article.data.pubDate.toISOString()}>{formattedDate}</time>
-          {article.data.hub && (
-            <a href={`/topics/${article.data.hub}`} class="article-hub">
-              {article.data.hub.replace(/-/g, ' ')}
-            </a>
-          )}
-        </div>
-        <h1>{article.data.title}</h1>
-        <p class="article-desc">{article.data.description}</p>
-      </header>
+      <ContentHeader
+        label={article.data.type}
+        title={article.data.title}
+        description={article.data.description}
+        pubDate={article.data.pubDate}
+        hub={article.data.hub}
+      />
 
       <div class="prose">
         <Content />
       </div>
 
-      <footer class="article-footer">
-        {article.data.tags.length > 0 && (
-          <div class="article-tags">
-            {article.data.tags.map(tag => (
-              <span class="tag">{tag}</span>
-            ))}
-          </div>
-        )}
-        <SubscribeForm variant="inline" />
-      </footer>
+      <ContentFooter tags={article.data.tags} />
     </div>
   </article>
 </BaseLayout>
-
-<style>
-  .article-header {
-    margin-bottom: 2.5rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid var(--border-subtle);
-  }
-  .article-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1.25rem;
-    flex-wrap: wrap;
-  }
-  .article-meta time {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-  }
-  .article-hub {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    text-transform: capitalize;
-  }
-  .article-header h1 {
-    margin-bottom: 0.75rem;
-  }
-  .article-desc {
-    font-size: 1.15rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
-  }
-  .article-footer {
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border-subtle);
-  }
-  .article-tags {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-  }
-</style>

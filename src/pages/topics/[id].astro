@@ -5,7 +5,7 @@ import SubscribeForm from '../../components/SubscribeForm.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
-  const hubs = await getCollection('hubs');
+  const hubs = await getCollection('hubs', ({ data }) => !data.draft);
   return hubs.map(hub => ({ params: { id: hub.id }, props: { hub } }));
 }
 
@@ -29,7 +29,7 @@ const schema = {
 };
 ---
 
-<BaseLayout title={hub.data.title} description={hub.data.description} ogType="article" schema={schema}>
+<BaseLayout title={hub.data.title} description={hub.data.description} ogType="website" schema={schema}>
   <article class="section">
     <div class="container content-width">
       <div class="hub-header">
