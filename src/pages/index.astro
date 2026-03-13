@@ -50,7 +50,7 @@ const movementPrinciples = [
   <!-- Hero -->
   <section class="hero">
     <div class="container">
-      <div class="hero-content">
+      <div class="hero-content animate-rise" style="--d: 0.05s;">
         <div class="hero-badge">Open source AI for security, transparency, and sovereignty</div>
         <h1 class="hero-title">
           Let's Open.<br />
@@ -63,9 +63,21 @@ const movementPrinciples = [
           <a href="/subscribe" class="btn btn-primary">Subscribe for free</a>
           <a href="/topics" class="btn btn-outline">Explore topics →</a>
         </div>
+        <div class="hero-metrics">
+          <span>Human-edited</span>
+          <span>Machine-readable</span>
+          <span>Open source first</span>
+        </div>
       </div>
-      <div class="hero-visual">
-        <div class="hero-glyph">⟐</div>
+      <div class="hero-visual animate-rise" style="--d: 0.2s;">
+        <div class="hero-frame">
+          <div class="hero-glyph">⟐</div>
+          <div class="hero-lines">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -75,7 +87,7 @@ const movementPrinciples = [
     <section class="section">
       <div class="container">
         <div class="section-label">Featured</div>
-        <a href={`/articles/${featuredArticle.id}`} class="featured-card">
+        <a href={`/articles/${featuredArticle.id}`} class="featured-card animate-rise" style="--d: 0.08s;">
           <div class="featured-meta">
             <span class="tag">{featuredArticle.data.type}</span>
             <time datetime={featuredArticle.data.pubDate.toISOString()}>
@@ -102,7 +114,7 @@ const movementPrinciples = [
       </div>
       <div class="grid-4">
         {movementPrinciples.map((item) => (
-          <div class="card principle-card">
+          <div class="card principle-card animate-rise">
             <h3>{item.title}</h3>
             <p>{item.description}</p>
           </div>
@@ -219,90 +231,164 @@ const movementPrinciples = [
 <style>
   /* Hero */
   .hero {
-    padding: 5rem 0 4rem;
+    padding: 5.4rem 0 4.3rem;
   }
+
   .hero .container {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
     align-items: center;
-    justify-content: space-between;
-    gap: 3rem;
+    gap: 2.5rem;
   }
+
   .hero-content {
-    max-width: 640px;
+    max-width: 720px;
+    animation-delay: var(--d);
   }
+
   .hero-badge {
-    display: inline-block;
-    font-size: 0.8rem;
-    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.68rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.11em;
     color: var(--accent);
-    margin-bottom: 1.25rem;
-    padding: 0.3em 0.8em;
-    background: var(--accent-subtle);
-    border-radius: 4px;
+    margin-bottom: 1.18rem;
+    padding: 0.34em 0.82em;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    background: color-mix(in srgb, var(--accent-subtle) 80%, transparent);
   }
+
   .hero-title {
-    font-size: clamp(2.25rem, 5.5vw, 3.5rem);
-    line-height: 1.1;
+    font-size: clamp(2.2rem, 6vw, 4.8rem);
+    line-height: 1;
     margin-bottom: 1.25rem;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
   }
+
   .hero-accent {
     color: var(--accent);
   }
+
   .hero-desc {
-    font-size: 1.15rem;
+    font-size: 1.07rem;
     color: var(--text-secondary);
-    max-width: 520px;
-    margin-bottom: 2rem;
-    line-height: 1.6;
+    max-width: 600px;
+    margin-bottom: 1.6rem;
+    line-height: 1.72;
   }
+
   .hero-actions {
     display: flex;
-    gap: 1rem;
+    gap: 0.78rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.1rem;
+  }
+
+  .hero-metrics {
+    display: flex;
+    gap: 0.5rem;
     flex-wrap: wrap;
   }
-  .hero-visual {
-    flex-shrink: 0;
+
+  .hero-metrics span {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.32em 0.7em;
+    background: color-mix(in srgb, var(--bg-card) 88%, transparent);
   }
+
+  .hero-visual {
+    animation-delay: var(--d);
+  }
+
+  .hero-frame {
+    display: grid;
+    place-items: center;
+    min-height: 380px;
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    background:
+      linear-gradient(145deg, color-mix(in srgb, var(--accent) 10%, transparent), transparent 52%),
+      var(--bg-card);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+  }
+
   .hero-glyph {
-    font-size: 8rem;
+    font-size: clamp(6rem, 16vw, 10rem);
     color: var(--accent);
-    opacity: 0.15;
+    opacity: 0.16;
     line-height: 1;
+  }
+
+  .hero-lines {
+    position: absolute;
+    inset: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    pointer-events: none;
+  }
+
+  .hero-lines span {
+    border-top: 1px solid color-mix(in srgb, var(--accent) 20%, var(--border));
+  }
+
+  .hero-lines span:nth-child(2) {
+    margin-left: 30%;
+  }
+
+  .hero-lines span:nth-child(3) {
+    margin-left: 58%;
   }
 
   /* Section helpers */
   .section-label {
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: 0.68rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.12em;
     color: var(--accent);
-    margin-bottom: 1rem;
+    margin-bottom: 0.82rem;
   }
+
   .section-header {
     display: flex;
-    align-items: baseline;
+    align-items: flex-end;
     justify-content: space-between;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.4rem;
     gap: 1.5rem;
   }
+
   .section-header-stack {
     align-items: end;
   }
+
   .section-intro {
     max-width: 420px;
-    font-size: 0.95rem;
+    font-size: 0.96rem;
     color: var(--text-secondary);
     margin: 0;
   }
+
   .section-link {
-    font-size: 0.875rem;
-    font-weight: 500;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     color: var(--text-muted);
   }
+
   .section-link:hover {
     color: var(--accent);
   }
@@ -310,49 +396,66 @@ const movementPrinciples = [
   /* Featured card */
   .featured-card {
     display: block;
-    background: linear-gradient(135deg, var(--accent-subtle), transparent 60%);
+    background:
+      linear-gradient(150deg, color-mix(in srgb, var(--accent) 12%, transparent), transparent 50%),
+      var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 2.5rem;
-    transition: border-color 0.2s ease;
+    box-shadow: var(--shadow-md);
+    padding: clamp(1.45rem, 3vw, 2.6rem);
+    transition: border-color 0.2s ease, transform 0.2s ease;
     color: inherit;
+    animation-delay: var(--d);
   }
+
   .featured-card:hover {
     border-color: var(--accent);
+    transform: translateY(-2px);
     color: inherit;
   }
+
   .featured-meta {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.88rem;
+    flex-wrap: wrap;
   }
+
   .featured-meta time {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
     color: var(--text-muted);
   }
+
   .featured-title {
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    margin-bottom: 0.75rem;
+    font-size: clamp(1.55rem, 3vw, 2.4rem);
+    margin-bottom: 0.7rem;
+    text-wrap: balance;
   }
+
   .featured-desc {
-    font-size: 1.05rem;
+    font-size: 1rem;
     color: var(--text-secondary);
     max-width: 640px;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.1rem;
   }
+
   .featured-link {
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     color: var(--accent);
   }
 
   .principle-card h3 {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
   }
+
   .principle-card p {
     margin-bottom: 0;
-    font-size: 0.92rem;
+    font-size: 0.9rem;
     color: var(--text-secondary);
   }
 
@@ -360,45 +463,90 @@ const movementPrinciples = [
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 2rem;
-    padding: 2rem;
+    gap: 1.6rem;
+    padding: 1.7rem;
+    border-radius: var(--radius-lg);
+    background:
+      linear-gradient(150deg, color-mix(in srgb, var(--accent) 10%, transparent), transparent 42%),
+      var(--bg-card);
   }
+
   .operating-model h2 {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.65rem;
+    font-size: clamp(1.4rem, 2.8vw, 2rem);
   }
+
   .operating-model p {
     max-width: 700px;
     margin-bottom: 0;
+    color: var(--text-secondary);
   }
+
   .operating-actions {
     flex-shrink: 0;
   }
 
-  @media (max-width: 768px) {
+  .animate-rise {
+    animation-name: rise-in;
+    animation-duration: 0.58s;
+    animation-fill-mode: both;
+    animation-timing-function: ease;
+    animation-delay: var(--d, 0s);
+  }
+
+  @media (max-width: 900px) {
     .hero .container {
-      flex-direction: column;
+      grid-template-columns: 1fr;
       text-align: center;
     }
+
     .hero-desc {
       margin-left: auto;
       margin-right: auto;
     }
+
     .hero-actions {
       justify-content: center;
     }
-    .hero-visual {
-      display: none;
+
+    .hero-metrics {
+      justify-content: center;
     }
+
+    .hero-frame {
+      min-height: 260px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
     .featured-card {
       padding: 1.5rem;
     }
+
     .section-header-stack {
       align-items: flex-start;
       flex-direction: column;
     }
+
     .operating-model {
       flex-direction: column;
       align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero {
+      padding-top: 4.1rem;
+    }
+
+    .hero-frame {
+      min-height: 210px;
+    }
+
+    .section-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.6rem;
     }
   }
 </style>

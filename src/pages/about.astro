@@ -6,13 +6,15 @@ import SubscribeForm from '../components/SubscribeForm.astro';
 <BaseLayout title="About" description="What letsopen.ai is, why it exists, and how it works. An AI-operated, human-edited publication for the open source AI ecosystem.">
   <section class="section">
     <div class="container content-width">
-      <h1>About letsopen.ai</h1>
+      <header class="about-header card">
+        <span class="about-kicker">About</span>
+        <h1>About letsopen.ai</h1>
+        <p class="lede">
+          <strong>Let's Open</strong> exists because AI should be more secure, more transparent, more sovereign, and more broadly accessible.
+        </p>
+      </header>
 
       <div class="prose">
-        <p class="lede">
-          <strong>Let's Open</strong> exists because AI should be more secure, more transparent, more sovereign, and more broadly accessible. We cover the open source AI projects, tools, models, workflows, and agent systems that make that future more real.
-        </p>
-
         <h2>Why this exists</h2>
         <p>
           Open source AI is moving fast. New models drop weekly. Agent frameworks proliferate. Tools launch, evolve, and sometimes disappear. Keeping up is a full-time job — and most of the coverage out there is either surface-level news aggregation or SEO-optimized filler.
@@ -26,10 +28,10 @@ import SubscribeForm from '../components/SubscribeForm.astro';
 
         <h2>How it works</h2>
         <p>
-          letsopen.ai is an <strong>AI-operated, human-edited</strong> publication. That's not a marketing phrase — it's the actual operating model.
+          letsopen.ai is an <strong>AI-operated, human-edited</strong> publication. That's not a marketing phrase, it's the operating model.
         </p>
         <p>
-          AI agents handle the heavy lifting: scanning the ecosystem for developments, assembling research briefs, drafting content, maintaining and updating existing articles, and preparing distribution. A human editor provides taste, judgment, and the final "publish" decision.
+          AI agents handle the heavy lifting: scanning the ecosystem for developments, assembling research briefs, drafting content, maintaining and updating existing articles, and preparing distribution. A human editor provides taste, judgment, and the final publish decision.
         </p>
         <p>
           This model lets a small operation produce coverage that would normally require a full editorial team. The AI does the work; the human ensures the quality.
@@ -37,7 +39,7 @@ import SubscribeForm from '../components/SubscribeForm.astro';
 
         <h2>What we cover</h2>
         <p>
-          Our initial focus is the <strong>open source AI agents</strong> space — personal AI assistants, coding agents, multi-agent orchestration, and the tools and infrastructure that power them. This is where the most interesting work is happening in open source AI right now.
+          Our initial focus is the <strong>open source AI agents</strong> space: personal AI assistants, coding agents, multi-agent orchestration, and the tools and infrastructure that power them.
         </p>
         <p>
           Over time, we'll expand to cover the broader open source AI ecosystem: models, inference, training, creative tools, and more.
@@ -47,23 +49,23 @@ import SubscribeForm from '../components/SubscribeForm.astro';
         <ul>
           <li><strong>Signal over noise.</strong> We cover what matters, not everything that happens.</li>
           <li><strong>Useful over impressive.</strong> Every piece should help someone make a better decision or understand something more clearly.</li>
-          <li><strong>Honest over neutral.</strong> We have opinions and we share them. We also show our evidence and acknowledge uncertainty.</li>
-          <li><strong>Quality over quantity.</strong> Fewer, stronger pieces. Nothing that reads like filler.</li>
-          <li><strong>Open over closed.</strong> We believe in the open source AI ecosystem and cover it because it matters, not because it's trendy.</li>
+          <li><strong>Honest over neutral.</strong> We have opinions and share them with evidence and uncertainty.</li>
+          <li><strong>Quality over quantity.</strong> Fewer, stronger pieces. No filler.</li>
+          <li><strong>Open over closed.</strong> We believe the open ecosystem matters and deserves serious coverage.</li>
         </ul>
 
         <h2>Built with</h2>
         <p>
-          This site is built with <a href="https://astro.build">Astro</a>, deployed on <a href="https://pages.cloudflare.com">Cloudflare Pages</a>, and the content is authored in Markdown — AI-friendly by design. The stack is intentionally simple: the content is the product, not the technology.
+          This site is built with <a href="https://astro.build">Astro</a>, deployed on <a href="https://pages.cloudflare.com">Cloudflare Pages</a>, and authored in Markdown. The stack stays simple so the content stays sharp.
         </p>
 
         <h2>Get in touch</h2>
         <p>
-          We're always interested in hearing from builders, maintainers, and anyone working in the open source AI space. Reach out on <a href="https://x.com/letsopenai">X/Twitter</a> or via email.
+          We're interested in hearing from builders, maintainers, and anyone working in open source AI. Reach out on <a href="https://x.com/letsopenai">X/Twitter</a> or via email.
         </p>
       </div>
 
-      <div style="margin-top: 3rem;">
+      <div class="about-subscribe">
         <SubscribeForm variant="full" />
       </div>
     </div>
@@ -71,12 +73,36 @@ import SubscribeForm from '../components/SubscribeForm.astro';
 </BaseLayout>
 
 <style>
-  h1 {
-    margin-bottom: 2rem;
+  .about-header {
+    margin-bottom: 2.2rem;
+    padding: clamp(1.2rem, 3vw, 2rem);
+    background:
+      linear-gradient(160deg, color-mix(in srgb, var(--accent) 9%, transparent), transparent 48%),
+      var(--bg-card);
   }
+
+  .about-kicker {
+    display: inline-block;
+    margin-bottom: 0.65rem;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .about-header h1 {
+    margin-bottom: 0.72rem;
+  }
+
   .lede {
-    font-size: 1.2rem;
-    color: var(--text-primary);
-    line-height: 1.7;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.66;
+    margin: 0;
+  }
+
+  .about-subscribe {
+    margin-top: 3rem;
   }
 </style>

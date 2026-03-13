@@ -1,7 +1,7 @@
 ---
 title: Workflows & Orchestration
 description: "Multi-agent systems, AI pipelines, and orchestration patterns. How to make AI agents work together."
-icon: "🔀"
+icon: "arrows-shuffle"
 order: 8
 ---
 

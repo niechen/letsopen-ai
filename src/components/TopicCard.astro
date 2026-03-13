@@ -1,4 +1,6 @@
 ---
+import TopicIcon from './TopicIcon.astro';
+
 interface Props {
   title: string;
   description: string;
@@ -6,11 +8,14 @@ interface Props {
   icon?: string;
   count?: number;
 }
-const { title, description, href, icon = '◆', count } = Astro.props;
+const { title, description, href, icon = 'robot', count } = Astro.props;
 ---
 
 <a href={href} class="card topic-card">
-  <div class="topic-icon">{icon}</div>
+  <div class="topic-topline">
+    <TopicIcon name={icon} class="topic-icon" label={`${title} icon`} />
+    <span class="topic-kicker">Topic</span>
+  </div>
   <h3 class="topic-title">{title}</h3>
   <p class="topic-desc">{description}</p>
   {count !== undefined && (
@@ -25,27 +30,43 @@ const { title, description, href, icon = '◆', count } = Astro.props;
     text-decoration: none;
   }
 
+  .topic-topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.78rem;
+  }
+
   .topic-icon {
-    font-size: 1.5rem;
-    margin-bottom: 0.75rem;
+    font-size: 1.2rem;
     color: var(--accent);
+    line-height: 1;
+  }
+
+  .topic-kicker {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.11em;
+    color: var(--text-muted);
   }
 
   .topic-title {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.08rem;
+    margin-bottom: 0.48rem;
   }
 
   .topic-desc {
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     color: var(--text-muted);
     flex: 1;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.8rem;
+    line-height: 1.55;
   }
 
   .topic-count {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
+    font-family: var(--font-mono);
     color: var(--text-muted);
-    font-weight: 500;
   }
 </style>

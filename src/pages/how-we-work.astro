@@ -6,16 +6,18 @@ import SubscribeForm from '../components/SubscribeForm.astro';
 <BaseLayout title="How We Work" description="How Let's Open operates: AI-assisted research, human judgment, open-source-first values, and a publishing model designed for speed and trust.">
   <section class="section">
     <div class="container content-width">
-      <h1>How We Work</h1>
-
-      <div class="prose">
+      <header class="work-header card">
+        <span class="work-kicker">Operating Model</span>
+        <h1>How We Work</h1>
         <p class="lede">
           <strong>Let's Open</strong> is built around a simple idea: AI can accelerate the work, but humans should still own the judgment.
         </p>
+      </header>
 
+      <div class="prose">
         <h2>Our operating model</h2>
         <p>
-          We use AI agents to monitor the open source AI ecosystem, assemble research, draft structured content, maintain evergreen pages, and help with publishing operations. Human oversight remains responsible for prioritization, editorial direction, taste, and final release decisions.
+          We use AI agents to monitor the open source AI ecosystem, assemble research, draft structured content, maintain evergreen pages, and support publishing operations. Human oversight is responsible for prioritization, editorial direction, and final release decisions.
         </p>
 
         <h2>What AI does here</h2>
@@ -24,20 +26,20 @@ import SubscribeForm from '../components/SubscribeForm.astro';
           <li>draft structured explainers, comparisons, and guides</li>
           <li>refresh pages as tools and categories evolve</li>
           <li>prepare machine-readable discovery layers for agents and retrieval systems</li>
-          <li>help maintain content operations with speed and consistency</li>
+          <li>maintain content operations with speed and consistency</li>
         </ul>
 
         <h2>What humans still decide</h2>
         <ul>
           <li>what deserves attention</li>
           <li>what claims are strong enough to publish</li>
-          <li>what tradeoffs and recommendations are actually defensible</li>
+          <li>what recommendations are defensible</li>
           <li>how the site should evolve as a product and brand</li>
         </ul>
 
         <h2>Why this model matters</h2>
         <p>
-          AI publishing can easily collapse into content spam. We are aiming for the opposite: use automation to create more signal, not more sludge. The point is not infinite content volume. The point is faster, better coverage of what matters.
+          AI publishing can collapse into content spam. We are aiming for the opposite: use automation to create more signal, not more sludge. The point is not infinite content volume. The point is faster, better coverage of what matters.
         </p>
 
         <h2>Open by design</h2>
@@ -51,7 +53,7 @@ import SubscribeForm from '../components/SubscribeForm.astro';
         </p>
       </div>
 
-      <div style="margin-top: 3rem;">
+      <div class="work-subscribe">
         <SubscribeForm variant="full" />
       </div>
     </div>
@@ -59,12 +61,36 @@ import SubscribeForm from '../components/SubscribeForm.astro';
 </BaseLayout>
 
 <style>
-  h1 {
-    margin-bottom: 2rem;
+  .work-header {
+    margin-bottom: 2.2rem;
+    padding: clamp(1.2rem, 3vw, 2rem);
+    background:
+      linear-gradient(160deg, color-mix(in srgb, var(--accent) 9%, transparent), transparent 48%),
+      var(--bg-card);
   }
+
+  .work-kicker {
+    display: inline-block;
+    margin-bottom: 0.65rem;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .work-header h1 {
+    margin-bottom: 0.72rem;
+  }
+
   .lede {
-    font-size: 1.2rem;
-    color: var(--text-primary);
-    line-height: 1.7;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.66;
+    margin: 0;
+  }
+
+  .work-subscribe {
+    margin-top: 3rem;
   }
 </style>

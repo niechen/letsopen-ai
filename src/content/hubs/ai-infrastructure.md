@@ -1,7 +1,7 @@
 ---
 title: AI Infrastructure
 description: "The open source tools and platforms that power AI development. From training to deployment, inference to monitoring."
-icon: "⚙️"
+icon: "server"
 order: 6
 ---
 

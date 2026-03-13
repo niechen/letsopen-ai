@@ -1,7 +1,7 @@
 ---
 title: Open Source AI Tools
 description: "Practical tools for builders. The best open source software for working with AI models, agents, and workflows."
-icon: "🔧"
+icon: "tools"
 order: 7
 ---
 

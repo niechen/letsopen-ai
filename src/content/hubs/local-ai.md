@@ -1,7 +1,7 @@
 ---
 title: Local AI
 description: "Running AI models and agents on your own hardware. Privacy-first, offline-capable, fully under your control."
-icon: "🏠"
+icon: "home"
 order: 4
 ---
 
