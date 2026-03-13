@@ -1,4 +1,6 @@
 ---
+import TopicIcon from './TopicIcon.astro';
+
 interface Props {
   title: string;
   description: string;
@@ -6,12 +8,12 @@ interface Props {
   icon?: string;
   count?: number;
 }
-const { title, description, href, icon = '◆', count } = Astro.props;
+const { title, description, href, icon = 'robot', count } = Astro.props;
 ---
 
 <a href={href} class="card topic-card">
   <div class="topic-topline">
-    <div class="topic-icon">{icon}</div>
+    <TopicIcon name={icon} class="topic-icon" label={`${title} icon`} />
     <span class="topic-kicker">Topic</span>
   </div>
   <h3 class="topic-title">{title}</h3>

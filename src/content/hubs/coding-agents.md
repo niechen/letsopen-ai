@@ -1,7 +1,7 @@
 ---
 title: Coding Agents
 description: "AI agents that write, review, and ship code. From CLI tools to IDE integrations — the new wave of AI-powered software development."
-icon: "⌨️"
+icon: "code"
 order: 2
 ---
 

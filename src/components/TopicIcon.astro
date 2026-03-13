@@ -1,0 +1,65 @@
+---
+import arrowsShuffle from '../icons/tabler/arrows-shuffle.svg?raw';
+import brain from '../icons/tabler/brain.svg?raw';
+import code from '../icons/tabler/code.svg?raw';
+import home from '../icons/tabler/home.svg?raw';
+import paw from '../icons/tabler/paw.svg?raw';
+import robot from '../icons/tabler/robot.svg?raw';
+import server from '../icons/tabler/server.svg?raw';
+import tools from '../icons/tabler/tools.svg?raw';
+
+interface Props {
+  name?: string;
+  size?: string;
+  class?: string;
+  label?: string;
+}
+
+const {
+  name = 'robot',
+  size = '1.35rem',
+  class: className,
+  label,
+} = Astro.props;
+
+const icons: Record<string, string> = {
+  'arrows-shuffle': arrowsShuffle,
+  brain,
+  code,
+  home,
+  paw,
+  robot,
+  server,
+  tools,
+};
+
+const svg = icons[name] ?? robot;
+const ariaHidden = label ? undefined : true;
+---
+
+<span
+  class:list={['topic-icon-svg', className]}
+  style={`--icon-size: ${size};`}
+  aria-hidden={ariaHidden}
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  set:html={svg}
+/>
+
+<style>
+  .topic-icon-svg {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .topic-icon-svg :global(svg) {
+    width: 100%;
+    height: 100%;
+    stroke: currentColor;
+  }
+</style>

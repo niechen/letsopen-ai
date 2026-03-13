@@ -1,7 +1,7 @@
 ---
 title: OpenClaw
 description: "An AI-native personal operations platform. Multi-agent orchestration, coding agents, personal automation — running locally, operated by AI."
-icon: "🦞"
+icon: "paw"
 order: 3
 ---
 

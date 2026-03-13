@@ -1,7 +1,7 @@
 ---
 title: Open Source AI Agents
 description: "The landscape of open source AI agents: autonomous systems that can reason, plan, and take action. From personal assistants to multi-agent orchestration."
-icon: "🤖"
+icon: "robot"
 order: 1
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Open Models
 description: "Open-weight and open-source language models. The foundations that power the open source AI ecosystem."
-icon: "🧠"
+icon: "brain"
 order: 5
 ---
 

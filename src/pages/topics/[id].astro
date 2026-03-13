@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import SubscribeForm from '../../components/SubscribeForm.astro';
+import TopicIcon from '../../components/TopicIcon.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -33,7 +34,7 @@ const schema = {
   <article class="section">
     <div class="container content-width">
       <header class="hub-header card">
-        {hub.data.icon && <span class="hub-icon">{hub.data.icon}</span>}
+        {hub.data.icon && <TopicIcon name={hub.data.icon} size="2.35rem" class="hub-icon" label={`${hub.data.title} icon`} />}
         <h1>{hub.data.title}</h1>
         <p class="hub-desc">{hub.data.description}</p>
       </header>
@@ -82,10 +83,8 @@ const schema = {
   }
 
   .hub-icon {
-    font-size: 2.2rem;
-    display: block;
+    display: inline-flex;
     margin-bottom: 0.8rem;
-    color: var(--accent);
   }
 
   .hub-header h1 {
