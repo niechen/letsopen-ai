@@ -46,7 +46,7 @@ export async function GET(context: APIContext) {
       url: `${base}/comparisons/${item.id}`,
       machineUrl: `${base}/agent/comparisons/${item.id}.txt`,
       date: item.data.pubDate.toISOString(),
-      keywords: [item.data.title, item.data.description, ...(item.data.tags ?? []), item.data.verdict ?? '']
+      keywords: [item.data.title, item.data.description, ...(item.data.tags ?? []), item.data.hub ?? '', item.data.verdict ?? '']
         .filter(Boolean),
     })),
     ...hubs.map((item) => ({
@@ -69,9 +69,10 @@ export async function GET(context: APIContext) {
     });
 
   return new Response(JSON.stringify({
-    searchMode: 'client-side',
+    endpointType: 'search-index',
+    searchMode: 'static-client-side',
     queryParamSupport: false,
-    note: 'This static endpoint returns a searchable corpus; filter results client-side.',
+    note: 'This static endpoint returns a searchable corpus. Fetch /api/search.json and filter results client-side using title, description, tags, and keywords.',
     count: results.length,
     results,
   }, null, 2), {

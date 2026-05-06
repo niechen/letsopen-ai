@@ -3,6 +3,7 @@ title: "Codex CLI vs Claude Code vs Gemini CLI"
 description: "A practical comparison of the three major terminal-based coding agents. Which one should you use, and when?"
 pubDate: 2026-03-09
 tags: ["coding agents", "comparison", "tools"]
+hub: "coding-agents"
 verdict: "Claude Code for complex codebases, Codex CLI for sandboxed tasks, Gemini CLI for Google ecosystem integration."
 ---
 

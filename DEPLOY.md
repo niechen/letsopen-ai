@@ -93,7 +93,7 @@ Likely next DNS/domain tasks when ready:
 - `/llms-full.txt`
 - `/agent-manifest.json`
 - `/api/content-index.json`
-- `/api/search.json?q=open source ai`
+- `/api/search.json`
 - `/agent/.../*.txt`
 - `/rss.xml`
 - `/sitemap-index.xml`

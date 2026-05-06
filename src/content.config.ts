@@ -37,6 +37,7 @@ const comparisons = defineCollection({
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     tags: z.array(z.string()).default([]),
+    hub: z.string().optional(),
     verdict: z.string().optional(),
     draft: z.boolean().default(false),
   }),

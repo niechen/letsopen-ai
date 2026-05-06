@@ -13,8 +13,19 @@ export async function getStaticPaths() {
 const { hub } = Astro.props;
 const { Content } = await render(hub);
 
-const articles = await getCollection('articles', ({ data }) => !data.draft && data.hub === hub.id);
+const [articles, guides, comparisons] = await Promise.all([
+  getCollection('articles', ({ data }) => !data.draft && data.hub === hub.id),
+  getCollection('guides', ({ data }) => !data.draft && data.hub === hub.id),
+  getCollection('comparisons', ({ data }) => !data.draft && data.hub === hub.id),
+]);
 const sortedArticles = articles.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const sortedGuides = guides.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const sortedComparisons = comparisons.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const relatedContent = [
+  ...sortedArticles.map((item) => ({ title: item.data.title, url: `${Astro.site}articles/${item.id}` })),
+  ...sortedGuides.map((item) => ({ title: item.data.title, url: `${Astro.site}guides/${item.id}` })),
+  ...sortedComparisons.map((item) => ({ title: item.data.title, url: `${Astro.site}comparisons/${item.id}` })),
+];
 
 const schema = {
   '@context': 'https://schema.org',
@@ -22,10 +33,10 @@ const schema = {
   name: hub.data.title,
   description: hub.data.description,
   url: Astro.url.href,
-  about: sortedArticles.map((article) => ({
+  about: relatedContent.map((item) => ({
     '@type': 'Thing',
-    name: article.data.title,
-    url: `${Astro.site}articles/${article.id}`,
+    name: item.title,
+    url: item.url,
   })),
 };
 ---
@@ -58,6 +69,46 @@ const schema = {
               pubDate={article.data.pubDate}
               tags={article.data.tags}
               type={article.data.type}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {sortedGuides.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2 style="margin-bottom: 1.2rem;">Related guides</h2>
+        <div class="grid-3">
+          {sortedGuides.map(guide => (
+            <ArticleCard
+              title={guide.data.title}
+              description={guide.data.description}
+              href={`/guides/${guide.id}`}
+              pubDate={guide.data.pubDate}
+              tags={guide.data.tags}
+              type="guide"
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {sortedComparisons.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2 style="margin-bottom: 1.2rem;">Related comparisons</h2>
+        <div class="grid-3">
+          {sortedComparisons.map(comp => (
+            <ArticleCard
+              title={comp.data.title}
+              description={comp.data.description}
+              href={`/comparisons/${comp.id}`}
+              pubDate={comp.data.pubDate}
+              tags={comp.data.tags}
+              type="comparison"
             />
           ))}
         </div>
