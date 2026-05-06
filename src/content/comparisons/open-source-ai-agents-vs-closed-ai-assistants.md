@@ -3,6 +3,7 @@ title: "Open source AI agents vs closed AI assistants"
 description: "The real tradeoffs between open and closed AI assistants: trust, control, speed, convenience, and long-term leverage."
 pubDate: 2026-03-10
 tags: ["agents", "comparison", "open source", "closed source"]
+hub: "open-source-ai-agents"
 verdict: "Closed assistants are often smoother today, but open agents win on control, transparency, composability, and long-term strategic value."
 ---
 

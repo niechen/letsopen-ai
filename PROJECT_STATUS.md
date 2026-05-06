@@ -69,7 +69,7 @@ The site currently exposes multiple layers for agent consumption.
 
 ### Structured layer
 - `/api/content-index.json`
-- `/api/search.json?q=...`
+- `/api/search.json` — static search index for client-side filtering
 
 ### Token-efficient content layer
 - `/agent/articles/{id}.txt`

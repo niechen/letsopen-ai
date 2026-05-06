@@ -84,6 +84,7 @@ export async function GET(context: APIContext) {
         machineUrl: `${base}/agent/comparisons/${comparison.id}.txt`,
         kind: 'comparison',
         verdict: comparison.data.verdict ?? null,
+        hub: comparison.data.hub ?? null,
         tags: comparison.data.tags ?? [],
         pubDate: comparison.data.pubDate.toISOString(),
         updatedDate: comparison.data.updatedDate?.toISOString() ?? null,

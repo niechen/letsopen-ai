@@ -90,7 +90,7 @@ src/
 
 ### Structured retrieval
 - `/api/content-index.json`
-- `/api/search.json?q=...`
+- `/api/search.json` — static search index for client-side filtering
 
 ### Token-efficient text mirrors
 - `/agent/articles/{id}.txt`

@@ -44,7 +44,7 @@ export async function GET(context: APIContext) {
         articles: 'timely analysis and thesis pieces',
       },
       formatPreference: 'Prefer .txt agent endpoints or JSON indexes before full HTML when token efficiency matters.',
-      search: 'Filter /api/search.json client-side using title/description/keywords fields.',
+      search: 'Fetch /api/search.json as a static search index, then filter client-side using title/description/tags/keywords fields.',
     },
   };
 
