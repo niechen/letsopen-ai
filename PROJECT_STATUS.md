@@ -38,6 +38,7 @@ Implemented:
 - Why AI needs to be open
 
 #### Guides
+- A practical open source AI agent app blueprint
 - The open source AI stack, explained
 - Best open source AI tools for builders (2026)
 - How to evaluate open source AI projects
@@ -63,19 +64,26 @@ The site currently exposes multiple layers for agent consumption.
 ### Discovery layer
 - `/llms.txt`
 - `/llms-full.txt`
+- `/agents` — human-readable guide to the agent/retrieval surfaces
 - `/agent-manifest.json`
 - `/rss.xml`
 - `/sitemap-index.xml`
+- `/sitemap-agents.xml` — sitemap for machine-readable JSON and text endpoints
 
 ### Structured layer
 - `/api/content-index.json`
 - `/api/search.json` — static search index for client-side filtering
+- shared schema metadata (`schemaVersion`, `fieldDefinitions`, retrieval protocol)
+- intent routing fields (`audience`, `builderStage`, `stackLayers`, `useCases`, `opennessSignals`, `intentKeywords`)
+- deterministic related-content graph edges (`related`) for hub and sibling traversal
+- manifest entry points include `exampleQueries` and `nextActions` for natural-language builder routing
 
 ### Token-efficient content layer
 - `/agent/articles/{id}.txt`
 - `/agent/guides/{id}.txt`
 - `/agent/comparisons/{id}.txt`
 - `/agent/topics/{id}.txt`
+- text mirrors include canonical URL, machine URL, hub, tags, intent metadata, and related links
 
 ### Metadata layer
 - page-level JSON-LD / schema on major content pages
@@ -96,6 +104,8 @@ The site currently exposes multiple layers for agent consumption.
 - GitHub Actions for auto deploy
 - MIT license
 - machine-readable and token-efficient endpoints are first-class, not afterthoughts
+- source posture, freshness, and operational risk should be explicit editorial dimensions
+- the newsletter is positioned as a builder brief for open source AI agents, app stacks, source posture, and practical tools
 
 ### Deployment / operations
 - use a dedicated Cloudflare API token for Pages deploys
@@ -114,21 +124,30 @@ Completed so far:
 - mission-led positioning pass completed
 - multiple launch content pieces added
 - agent-first surfaces added (`llms`, JSON index, text mirrors, search API, manifest)
+- agent sitemap, page-level alternate links, and visible footer links for machine endpoints added
+- public `/agents` page added to explain retrieval flow and machine-readable endpoints
+- practical agent app blueprint added as the primary builder starting point
+- intent metadata and endpoint schema descriptions added for agent routing
 - wording pass to prefer "open source AI" completed
+- freshness metadata added through `updatedDate` / `freshnessDate`
+- related-content graph exposed in JSON endpoints, agent text mirrors, and human content footers
+- manifest routing strengthened with `exampleQueries` and `nextActions`
+- how-we-work page expanded with editorial checks for source posture, builder usefulness, operational risk, and freshness
+- newsletter positioning tightened around the builder brief
 
 ## Current gaps / next priorities
 
 ### Product / content
 - increase launch content depth further
-- improve homepage so it feels even more essential and less like a shell
 - add more flagship pieces and stronger category-defining content
+- add more implementation-grade content around open source agent architecture, evaluation, and local deployment
+- add more proof-oriented content: concrete tool workflows, local deployment walkthroughs, and real builder decision trees
 - likely add richer visual/explainer content over time
 
 ### Agent-first / technical
 - improve search ranking/relevance logic
-- strengthen explicit relationships between content types
-- consider richer semantic retrieval later
-- evaluate whether an MCP-style surface is worthwhile later
+- strengthen relationship labels beyond hub/sibling edges when the corpus is larger
+- consider richer semantic retrieval or MCP-style access later
 
 ### Launch / ops
 - add custom domain when final review is complete

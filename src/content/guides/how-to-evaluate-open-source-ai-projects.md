@@ -2,6 +2,7 @@
 title: "How to evaluate open source AI projects"
 description: "A practical framework for deciding which open source AI projects are worth using, watching, or contributing to."
 pubDate: 2026-03-10
+updatedDate: 2026-05-07
 tags: ["guide", "evaluation", "open source", "builders"]
 hub: "open-source-ai-tools"
 ---
@@ -100,3 +101,41 @@ A project is worth watching if it is:
 - not yet operationally trustworthy
 
 That distinction saves a lot of wasted time.
+
+## Scoring rubric for builders
+
+Use this when comparing tools, model runtimes, agent frameworks, or infrastructure projects. Score each dimension from 0 to 2.
+
+| Dimension | 0 | 1 | 2 |
+|---|---|---|---|
+| Job fit | unclear problem | useful for demos | solves a real workflow |
+| Maintenance | stale or unclear | occasional updates | active releases and issue response |
+| Source posture | opaque or source-available only | partially open | open source with usable license |
+| Deployment control | hosted-only | limited self-hosting | local or self-hosted path is clear |
+| Composability | closed UI only | partial API or config | clean APIs, CLI, SDK, or plugin surface |
+| Governance | permissions unclear | some auditability | explicit permissions, logs, and safe defaults |
+| Evaluation | no tests or examples | examples only | repeatable tests, traces, or benchmarks |
+| Community | single-maintainer mystery | small but visible | healthy docs, issues, users, and contributors |
+
+Interpretation:
+
+- **13-16:** adopt if it fits your job
+- **9-12:** prototype or watch closely
+- **5-8:** use only for experiments
+- **0-4:** avoid unless you are contributing to fix the project
+
+The score is not a substitute for judgment. A narrow tool with a lower total score can still be the right choice if it solves the exact job and has a low blast radius.
+
+## Agent-specific checks
+
+For projects that can take action, add a second pass:
+
+- can the agent explain what it is about to do?
+- can read actions and write actions be separated?
+- are credentials scoped to the smallest useful permission?
+- are tool calls logged with inputs, outputs, and failures?
+- can the user approve, reject, or replay important actions?
+- can the system recover after a bad tool call?
+- does the project document how memory, traces, and user data are stored?
+
+If an agent project fails these checks, treat it as a research project or supervised prototype, not daily infrastructure.

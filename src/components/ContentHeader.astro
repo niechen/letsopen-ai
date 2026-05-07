@@ -4,23 +4,33 @@ interface Props {
   title: string;
   description: string;
   pubDate: Date;
+  updatedDate?: Date;
   hub?: string;
   verdict?: string;
 }
 
-const { label, title, description, pubDate, hub, verdict } = Astro.props;
+const { label, title, description, pubDate, updatedDate, hub, verdict } = Astro.props;
 
-const formattedDate = new Intl.DateTimeFormat('en-US', {
+const dateFormat = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
-}).format(pubDate);
+});
+
+const formattedDate = dateFormat.format(pubDate);
+const showUpdatedDate = updatedDate && updatedDate.valueOf() !== pubDate.valueOf();
+const formattedUpdatedDate = updatedDate ? dateFormat.format(updatedDate) : '';
 ---
 
 <header class="content-header">
   <div class="content-meta">
     <span class="tag">{label}</span>
     <time datetime={pubDate.toISOString()}>{formattedDate}</time>
+    {showUpdatedDate && (
+      <span class="updated-date">
+        Updated <time datetime={updatedDate.toISOString()}>{formattedUpdatedDate}</time>
+      </span>
+    )}
     {hub && (
       <a href={`/topics/${hub}`} class="content-hub">
         {hub.replace(/-/g, ' ')}

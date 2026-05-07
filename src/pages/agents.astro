@@ -1,0 +1,179 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const endpoints = [
+  {
+    title: 'Quick discovery',
+    href: '/llms.txt',
+    description: 'A compact map of the site, builder entry points, topic hubs, and featured content.',
+  },
+  {
+    title: 'Full AI index',
+    href: '/llms-full.txt',
+    description: 'A fuller retrieval map with agent mirror URLs for every topic, guide, comparison, and article.',
+  },
+  {
+    title: 'Agent manifest',
+    href: '/agent-manifest.json',
+    description: 'Structured entry points for common tasks like building an agent app, choosing a stack, evaluating projects, or comparing tools.',
+  },
+  {
+    title: 'Content index',
+    href: '/api/content-index.json',
+    description: 'The complete structured corpus with canonical URLs, machine URLs, tags, hubs, and intent metadata.',
+  },
+  {
+    title: 'Search index',
+    href: '/api/search.json',
+    description: 'A static search corpus designed for client-side filtering by title, description, tags, keywords, and intents.',
+  },
+  {
+    title: 'Agent sitemap',
+    href: '/sitemap-agents.xml',
+    description: 'A sitemap for machine-readable endpoints and token-efficient text mirrors.',
+  },
+];
+
+const retrievalSteps = [
+  'Start with /agent-manifest.json when you need task-oriented entry points.',
+  'Use /api/search.json when you need to filter by topic, use case, stack layer, audience, or builder stage.',
+  'Follow related edges from the manifest, JSON indexes, or text mirrors to move between a page, its topic hub, and sibling content.',
+  'Fetch a matching /agent/{collection}/{id}.txt mirror before full HTML when token efficiency matters.',
+  'Use canonical HTML pages when a human-readable layout or richer context is needed.',
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: 'For AI agents and retrieval systems',
+  description: 'How AI agents and retrieval systems should use letsopen.ai discovery files, structured indexes, text mirrors, and retrieval guidance.',
+  mainEntityOfPage: Astro.url.href,
+  publisher: {
+    '@type': 'Organization',
+    name: "Let's Open",
+  },
+  about: endpoints.map((endpoint) => ({
+    '@type': 'WebAPI',
+    name: endpoint.title,
+    url: new URL(endpoint.href, Astro.site).href,
+    description: endpoint.description,
+  })),
+};
+---
+
+<BaseLayout title="For Agents" description="How AI agents and retrieval systems should use letsopen.ai: discovery files, structured indexes, text mirrors, and retrieval guidance." schema={schema}>
+  <section class="section">
+    <div class="container content-width">
+      <header class="agents-header card">
+        <span class="agents-kicker">Agent Access</span>
+        <h1>For AI agents and retrieval systems</h1>
+        <p class="lede">
+          letsopen.ai is built for human readers and machine consumers. Use these endpoints to discover, index, retrieve, and cite open source AI content efficiently.
+        </p>
+      </header>
+
+      <div class="prose">
+        <h2>Recommended retrieval flow</h2>
+        <ol>
+          {retrievalSteps.map((step) => <li>{step}</li>)}
+        </ol>
+
+        <h2>Intent metadata</h2>
+        <p>
+          Structured JSON and text mirrors include routing fields such as <code>audience</code>, <code>builderStage</code>, <code>stackLayers</code>, <code>useCases</code>, <code>opennessSignals</code>, <code>intentKeywords</code>, and <code>related</code>. Manifest entry points also include <code>exampleQueries</code> and <code>nextActions</code> so agents can map natural-language builder questions to the right retrieval path, then decide what to fetch or verify next.
+        </p>
+
+        <h2>Related content graph</h2>
+        <p>
+          Use <code>related</code> edges for local graph traversal. A <code>topic-hub</code> edge points from a content page to its canonical hub, <code>same-topic</code> points to sibling articles, guides, or comparisons, and <code>hub-content</code> points from a hub to its strongest related pages.
+        </p>
+
+        <h2>Use guidance</h2>
+        <p>
+          Treat letsopen.ai recommendations as open-source-first editorial judgment for builders, not as exhaustive benchmarks or legal advice. Use <code>freshnessDate</code> for ranking, prefer <code>updatedDate</code> when present, and recheck licenses, releases, and pricing before operational decisions.
+        </p>
+        <p>
+          When citing the site, use canonical HTML URLs for human readers and <code>machineUrl</code> text mirrors for retrieval context.
+        </p>
+      </div>
+
+      <div class="endpoint-grid">
+        {endpoints.map((endpoint) => (
+          <a href={endpoint.href} class="card endpoint-card">
+            <h2>{endpoint.title}</h2>
+            <p>{endpoint.description}</p>
+            <span>{endpoint.href}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .agents-header {
+    margin-bottom: 2.2rem;
+    padding: clamp(1.2rem, 3vw, 2rem);
+    background:
+      linear-gradient(160deg, color-mix(in srgb, var(--accent) 9%, transparent), transparent 48%),
+      var(--bg-card);
+  }
+
+  .agents-kicker {
+    display: inline-block;
+    margin-bottom: 0.65rem;
+    color: var(--accent);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .agents-header h1 {
+    margin-bottom: 0.72rem;
+  }
+
+  .lede {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1.66;
+  }
+
+  .endpoint-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .endpoint-card {
+    display: flex;
+    min-height: 190px;
+    flex-direction: column;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .endpoint-card:hover {
+    color: inherit;
+  }
+
+  .endpoint-card h2 {
+    margin-bottom: 0.55rem;
+    font-size: 1.08rem;
+  }
+
+  .endpoint-card p {
+    flex: 1;
+    margin-bottom: 1rem;
+    font-size: 0.92rem;
+  }
+
+  .endpoint-card span {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    overflow-wrap: anywhere;
+  }
+</style>

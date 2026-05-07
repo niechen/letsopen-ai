@@ -9,6 +9,11 @@ interface Props {
   ogImage?: string;
   ogType?: string;
   canonicalUrl?: string;
+  alternateLinks?: Array<{
+    href: string;
+    type: string;
+    title?: string;
+  }>;
   schema?: any;
 }
 
@@ -18,11 +23,18 @@ const {
   ogImage = '/og-default.svg',
   ogType = 'website',
   canonicalUrl,
+  alternateLinks = [],
   schema,
 } = Astro.props;
 
 const siteTitle = title === 'Home' ? "Let's Open — Open source AI people can trust" : `${title} — Let's Open`;
 const canonical = canonicalUrl || Astro.url.href;
+const aiDiscoveryLinks = [
+  { href: '/llms.txt', type: 'text/plain', title: 'LLM discovery index' },
+  { href: '/llms-full.txt', type: 'text/plain', title: 'Full AI index' },
+  { href: '/agent-manifest.json', type: 'application/json', title: 'Agent manifest' },
+  { href: '/api/content-index.json', type: 'application/json', title: 'Structured content index' },
+];
 ---
 
 <!DOCTYPE html>
@@ -54,14 +66,26 @@ const canonical = canonicalUrl || Astro.url.href;
 
     <!-- RSS -->
     <link rel="alternate" type="application/rss+xml" title="letsopen.ai RSS" href="/rss.xml" />
+    {aiDiscoveryLinks.map((link) => (
+      <link
+        rel="alternate"
+        type={link.type}
+        title={link.title}
+        href={new URL(link.href, Astro.site).href}
+      />
+    ))}
+    {alternateLinks.map((link) => (
+      <link
+        rel="alternate"
+        type={link.type}
+        title={link.title}
+        href={new URL(link.href, Astro.site).href}
+      />
+    ))}
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
     {schema && (
       <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     )}

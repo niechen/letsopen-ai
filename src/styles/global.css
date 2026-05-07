@@ -1,4 +1,5 @@
 @import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
 @import '@fontsource/inter/600.css';
 @import '@fontsource/inter/700.css';
 @import '@fontsource/jetbrains-mono/400.css';
@@ -41,9 +42,9 @@
   --border-subtle: #e6e4db;
   --border-strong: #b5b1a4;
 
-  --font-sans: 'Plus Jakarta Sans', 'Avenir Next', 'Segoe UI', sans-serif;
-  --font-mono: 'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', monospace;
-  --font-display: 'Space Grotesk', var(--font-sans);
+  --font-sans: 'Inter', 'Avenir Next', 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+  --font-display: 'Inter', var(--font-sans);
 
   --max-width: 1240px;
   --content-width: 760px;
@@ -247,6 +248,11 @@ pre code {
 }
 
 .content-meta time {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.updated-date {
   font-size: 0.85rem;
   color: var(--text-muted);
 }

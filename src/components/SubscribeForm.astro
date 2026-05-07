@@ -9,8 +9,8 @@ const { variant = 'inline' } = Astro.props;
   {variant === 'full' && (
     <div class="subscribe-header">
       <span class="subscribe-kicker">Newsletter</span>
-      <h2>Stay in the loop</h2>
-      <p>Weekly signal on open source AI projects, tools, and decisions that matter.</p>
+      <h2>Get the builder brief</h2>
+      <p>Weekly signal on open source AI agents, app stacks, source posture, and tools worth building with.</p>
     </div>
   )}
   <form class="form" action="https://buttondown.com/api/emails/embed-subscribe/letsopenai" method="post" target="_blank">
@@ -24,7 +24,7 @@ const { variant = 'inline' } = Astro.props;
     <button type="submit" class="btn btn-primary">Subscribe</button>
   </form>
   {variant === 'inline' && (
-    <p class="form-note">Free weekly digest. No spam.</p>
+    <p class="form-note">Free builder brief. No spam.</p>
   )}
 </div>
 

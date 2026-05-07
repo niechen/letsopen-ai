@@ -31,6 +31,8 @@ Terminal-native agents that work directly in your development workflow.
 **Gemini CLI** (Google) — Google's entry into terminal-based coding agents
 **Aider** — Open source pair programming in the terminal
 
+**Source posture:** Codex CLI, Gemini CLI, and Aider are open source clients. Claude Code is proprietary but important as a workflow-quality benchmark.
+
 ### IDE-integrated agents
 Agents that work inside your editor, blending AI with your existing workflow.
 
@@ -42,6 +44,18 @@ Agents that work inside your editor, blending AI with your existing workflow.
 **SWE-Agent** — Automated software engineering for issue resolution
 **OpenHands** — Open platform for software development agents
 **Devon** — Open source pair programmer focused on real-world tasks
+
+## How to choose a coding agent
+
+Choose by workflow boundary, not by model preference alone.
+
+- **Use an open source client** when inspectability, extensibility, or self-hostable workflow control matters.
+- **Use sandboxed execution** when you want the agent to run commands with stronger guardrails.
+- **Use an IDE agent** when the human should stay inside editor review loops.
+- **Use a CLI agent** when the task spans files, tests, build commands, and repository operations.
+- **Use a proprietary benchmark tool** when quality matters now and source posture is less important than capability.
+
+For teams building agent products, coding agents are a useful proving ground because the work is observable: diffs, tests, logs, commits, and reviews make failure easier to inspect.
 
 ## What to watch
 

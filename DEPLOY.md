@@ -2,7 +2,7 @@
 
 ## Current deployment status
 
-The project is already set up.
+The Cloudflare Pages deployment path is set up, but the production custom domain is not currently serving the Cloudflare Pages project.
 
 ### Current state
 - GitHub repo exists: `niechen/letsopen-ai`
@@ -13,6 +13,14 @@ The project is already set up.
   - `CLOUDFLARE_PAGES_PROJECT`
 - Repo secret required for deploys:
   - `CLOUDFLARE_API_TOKEN`
+- Current public domain issue:
+  - `https://letsopen.ai` is still served by GitHub Pages, not Cloudflare Pages
+  - `curl -I https://letsopen.ai` currently returns `server: GitHub.com`
+  - apex DNS currently resolves to GitHub Pages IPs (`185.199.108.153` through `185.199.111.153`)
+  - `www.letsopen.ai` currently CNAMEs to `lets-open-ai.github.io`
+  - the Cloudflare Pages default URL is `https://letsopen-ai.pages.dev`
+
+Before expecting new site changes on `letsopen.ai`, make sure the desired changes are committed and pushed to `main`, then attach the custom domain to Cloudflare Pages and replace the old GitHub Pages DNS records.
 
 ## Auto-deploy workflow
 
@@ -72,10 +80,14 @@ wrangler pages deploy dist --project-name letsopen-ai
 Planned production domain:
 - `letsopen.ai`
 
-Likely next DNS/domain tasks when ready:
-1. add the custom domain to the Pages project
-2. point apex/root appropriately in Cloudflare
-3. optionally redirect `www` to apex
+Required DNS/domain tasks:
+1. commit and push the current site changes to `main`
+2. wait for the GitHub Actions Cloudflare Pages deployment to complete
+3. add `letsopen.ai` as a custom domain on the Cloudflare Pages project
+4. remove the old GitHub Pages apex A records
+5. remove or replace the `www.letsopen.ai -> lets-open-ai.github.io` CNAME
+6. point apex/root and optionally `www` to the Cloudflare Pages custom-domain target
+7. verify `curl -I https://letsopen.ai` no longer returns `server: GitHub.com`
 
 ## Post-deploy verification checklist
 

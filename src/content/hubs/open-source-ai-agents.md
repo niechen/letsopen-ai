@@ -35,6 +35,8 @@ Agents specialized for software development — writing code, fixing bugs, revie
 
 **Key projects:** Codex CLI, Claude Code, Aider, Continue, Cursor (partially open)
 
+**Source posture:** Aider, Continue, and Codex CLI are open source clients. Claude Code and Cursor are included because they shape coding-agent workflows, but they are not the open source baseline.
+
 ### Multi-agent orchestration
 Frameworks for building systems of multiple cooperating agents, each with specialized roles.
 
@@ -44,6 +46,56 @@ Frameworks for building systems of multiple cooperating agents, each with specia
 Agents built for narrow, well-defined tasks — research, data analysis, web scraping, content generation.
 
 **Key projects:** GPT Researcher, AgentGPT, BabyAGI
+
+## Builder paths
+
+Most builders should not start by choosing a framework. Start by choosing the path that matches the product job.
+
+### Local personal agent
+
+Use this path when privacy, file access, and personal workflow integration matter most.
+
+**Typical stack:** local model runtime, narrow desktop or CLI tools, local logs, explicit approval for write actions.
+
+**Good first jobs:** summarize local projects, draft notes from files, triage a personal task inbox, run repeatable research workflows.
+
+### Coding agent
+
+Use this path when the work happens inside repositories and success can be tested with builds, tests, or review.
+
+**Typical stack:** CLI or editor agent, repository tools, sandboxed command execution, patch review, CI feedback.
+
+**Good first jobs:** fix small issues, update docs, write tests, explain a codebase, prepare pull request drafts.
+
+### Workflow agent
+
+Use this path when the agent coordinates multiple tools or systems but the workflow is still bounded.
+
+**Typical stack:** orchestrator, typed tool layer, database or queue, approval gates, trace logging.
+
+**Good first jobs:** monitor issues, route support requests, prepare release notes, sync project knowledge.
+
+### Multi-agent system
+
+Use this path only when separate roles create real leverage.
+
+**Typical stack:** coordinator, specialist agents, shared state, role-specific prompts, evaluation harness, failure recovery.
+
+**Good first jobs:** parallel research, code review plus implementation, planner/executor separation, specialist review loops.
+
+## Maturity signals
+
+The strongest open source agent projects usually have:
+
+- a clear permission model for tool use
+- traces or logs that explain what happened
+- composable APIs, CLIs, or SDK boundaries
+- runnable local examples
+- active maintenance and issue response
+- support for more than one model or provider
+- a realistic story for evaluation and regression testing
+
+Weak signals include broad autonomy claims, unclear credentials, demos that cannot be reproduced locally, and architectures that hide the agent loop behind opaque hosted services.
 
 ## What to watch
 

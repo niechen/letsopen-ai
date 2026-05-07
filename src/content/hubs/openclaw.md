@@ -30,6 +30,23 @@ OpenClaw follows a hub-and-spoke model:
 - **Skills** — pluggable capabilities that agents can use (email, calendar, GitHub, etc.)
 - **Sessions** — context-aware conversations across channels
 
+## Builder posture
+
+OpenClaw is most interesting as a reference architecture for local, always-on agent infrastructure. It combines a control plane, channel adapters, agents, skills, and user approval loops into one system.
+
+That also makes the risk surface real. A useful personal operations agent may need access to files, browser sessions, communication channels, calendars, shell commands, and credentials. Builders should evaluate OpenClaw as infrastructure, not as a casual chatbot.
+
+Before adopting or extending it, check:
+
+- what runs locally and what calls external model providers
+- which channels and skills are enabled
+- what each skill can read, write, send, or execute
+- whether dangerous actions require approval
+- where logs, memory, and credentials are stored
+- how to disable a channel, revoke a token, or stop the daemon quickly
+
+The right mental model is not "install an assistant." It is "operate a local agent control plane."
+
 ## Use cases
 
 - Personal AI assistant with full access to your digital tools
@@ -40,9 +57,10 @@ OpenClaw follows a hub-and-spoke model:
 
 ## Getting started
 
-OpenClaw is available via npm/Homebrew and runs on macOS and Linux. Check the [official documentation](https://github.com/openclaw) for setup instructions.
+OpenClaw is available through installer and package-manager paths and is developed in the open at [openclaw/openclaw](https://github.com/openclaw/openclaw). Start with the [official site](https://openclaw.ai/) and repository before trusting third-party install pages or mirrors.
 
 ## Related content
 
 - [Open Source AI Agents](/topics/open-source-ai-agents) — The broader agent landscape
 - [Workflows & Orchestration](/topics/workflows-orchestration) — Multi-agent coordination patterns
+- [Local AI](/topics/local-ai) — Deployment patterns and readiness checks for local agents

@@ -2,6 +2,7 @@
 title: "OpenClaw: what it is and why it matters"
 description: "An AI-native personal operations platform that orchestrates agents for your digital life. Here's what OpenClaw does and why it's worth paying attention to."
 pubDate: 2026-03-09
+updatedDate: 2026-05-07
 author: "letsopen.ai"
 tags: ["openclaw", "agents", "personal AI"]
 hub: "openclaw"
@@ -61,6 +62,22 @@ This is a meaningful philosophical difference from most AI tools, which position
 OpenClaw is deployed and actively used as a daily-driver system. It's available via npm/Homebrew and runs on macOS and Linux. The skill ecosystem is growing, with capabilities spanning email, calendar, GitHub, coding agents, web search, and more.
 
 It's early — this is a system by and for power users right now. But the pattern it establishes — AI-operated personal infrastructure — is likely where personal AI is heading.
+
+## What to verify before running it
+
+The same qualities that make OpenClaw interesting also make it sensitive infrastructure. A personal agent that can operate across channels, files, browsers, shell commands, and credentials needs stronger scrutiny than a chat UI.
+
+Before installing or extending it, verify:
+
+- the package or source checkout comes from the official project
+- which model providers are configured and what context they receive
+- which channels are connected
+- which skills are enabled by default
+- where credentials, memory, and logs are stored
+- whether send, write, browser, and shell actions require approval
+- how to stop the gateway and revoke connected tokens
+
+For builders, this is the real lesson: the future of personal AI is not just better agents. It is better permission boundaries, logs, rollback paths, and human oversight around agents that can take action.
 
 ## Who should pay attention
 

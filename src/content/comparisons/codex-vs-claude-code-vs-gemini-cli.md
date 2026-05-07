@@ -2,12 +2,23 @@
 title: "Codex CLI vs Claude Code vs Gemini CLI"
 description: "A practical comparison of the three major terminal-based coding agents. Which one should you use, and when?"
 pubDate: 2026-03-09
+updatedDate: 2026-05-07
 tags: ["coding agents", "comparison", "tools"]
 hub: "coding-agents"
 verdict: "Claude Code for complex codebases, Codex CLI for sandboxed tasks, Gemini CLI for Google ecosystem integration."
 ---
 
 The terminal-based coding agent space has consolidated around three major players. Here's how they compare — and which one to pick.
+
+## Source posture
+
+This is a workflow comparison, not a purity ranking.
+
+- **Codex CLI** is an open source command-line coding agent backed by OpenAI models.
+- **Gemini CLI** is an open source command-line coding agent, published by Google under Apache 2.0.
+- **Claude Code** is a proprietary Anthropic coding agent distributed as a public npm package. It is included because it defines the current quality bar for terminal coding-agent workflows.
+
+If openness is a hard requirement, start with Codex CLI, Gemini CLI, Aider, Continue, or OpenHands. If best-in-class codebase understanding matters more than source posture, Claude Code is still an important benchmark.
 
 ## Quick verdict
 
@@ -68,9 +79,9 @@ Most experienced developers will benefit from having at least two of these avail
 |---|---|---|---|
 | Sandboxed execution | ✗ | ✓ | ✗ |
 | Extended thinking | ✓ | ✗ | ✓ (limited) |
-| Multimodal input | ✗ | ✗ | ✓ |
+| Multimodal input | ✗ | ✓ | ✓ |
 | Offline capable | ✗ | ✗ | ✗ |
-| Open source | ✓ | ✓ | ✓ |
+| Open source client | ✗ | ✓ | ✓ |
 | Custom model support | ✗ | ✗ | ✗ |
 
 ## Our recommendation
@@ -85,4 +96,4 @@ Most experienced developers will benefit from having at least two of these avail
 
 ---
 
-*This comparison is updated as these tools evolve. Last updated: March 2026.*
+*This comparison is updated as these tools evolve. Last updated: May 2026.*

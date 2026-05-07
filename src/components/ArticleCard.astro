@@ -4,23 +4,29 @@ interface Props {
   description: string;
   href: string;
   pubDate?: Date;
+  updatedDate?: Date;
   tags?: string[];
   type?: string;
   featured?: boolean;
 }
-const { title, description, href, pubDate, tags = [], type, featured = false } = Astro.props;
+const { title, description, href, pubDate, updatedDate, tags = [], type, featured = false } = Astro.props;
 
-const formattedDate = pubDate ? new Intl.DateTimeFormat('en-US', {
+const dateFormat = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
   month: 'short',
   day: 'numeric',
-}).format(pubDate) : null;
+});
+
+const showUpdatedDate = pubDate && updatedDate && updatedDate.valueOf() !== pubDate.valueOf();
+const displayDate = showUpdatedDate ? updatedDate : pubDate;
+const formattedDate = displayDate ? dateFormat.format(displayDate) : null;
+const dateLabel = showUpdatedDate ? 'Updated ' : '';
 ---
 
 <a href={href} class:list={['card', 'article-card', { featured }]}>
   <div class="article-meta">
     {type && <span class="tag">{type}</span>}
-    {formattedDate && <time datetime={pubDate?.toISOString()}>{formattedDate}</time>}
+    {formattedDate && <time datetime={displayDate?.toISOString()}>{dateLabel}{formattedDate}</time>}
   </div>
   <h3 class="article-title">{title}</h3>
   <p class="article-desc">{description}</p>

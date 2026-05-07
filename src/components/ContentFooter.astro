@@ -3,9 +3,34 @@ import SubscribeForm from './SubscribeForm.astro';
 
 interface Props {
   tags: string[];
+  related?: Array<{
+    relation: string;
+    title: string;
+    url: string;
+    kind: string;
+  }>;
 }
 
-const { tags } = Astro.props;
+const { tags, related = [] } = Astro.props;
+
+const relationLabel = {
+  'topic-hub': 'Topic hub',
+  'same-topic': 'Related',
+  'hub-content': 'From this topic',
+};
+
+function getHumanHref(url: string) {
+  try {
+    const parsed = new URL(url);
+    if (parsed.hostname === 'letsopen.ai') {
+      return `${parsed.pathname}${parsed.search}${parsed.hash}`;
+    }
+  } catch {
+    return url;
+  }
+
+  return url;
+}
 ---
 
 <footer class="content-footer">
@@ -16,5 +41,65 @@ const { tags } = Astro.props;
       ))}
     </div>
   )}
+  {related.length > 0 && (
+    <section class="related-content" aria-labelledby="related-heading">
+      <h2 id="related-heading">Related</h2>
+      <div class="related-list">
+        {related.map((item) => (
+          <a href={getHumanHref(item.url)} class="related-link">
+            <span>{relationLabel[item.relation] ?? item.kind}</span>
+            <strong>{item.title}</strong>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
   <SubscribeForm variant="inline" />
 </footer>
+
+<style>
+  .related-content {
+    margin-bottom: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .related-content h2 {
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+  }
+
+  .related-list {
+    display: grid;
+    gap: 0.72rem;
+  }
+
+  .related-link {
+    display: grid;
+    gap: 0.2rem;
+    padding: 0.85rem 0.95rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--bg-card) 86%, transparent);
+    color: inherit;
+  }
+
+  .related-link:hover {
+    border-color: var(--accent);
+    color: inherit;
+  }
+
+  .related-link span {
+    color: var(--accent);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .related-link strong {
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+</style>

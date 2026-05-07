@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContentHeader from '../../components/ContentHeader.astro';
 import ContentFooter from '../../components/ContentFooter.astro';
 import { getCollection, render } from 'astro:content';
+import { buildRelationEntries, findRelationEntry, getRelatedContent } from '../../utils/content-relations';
 
 export async function getStaticPaths() {
   const guides = await getCollection('guides', ({ data }) => !data.draft);
@@ -11,6 +12,19 @@ export async function getStaticPaths() {
 
 const { guide } = Astro.props;
 const { Content } = await render(guide);
+const [articles, guides, comparisons, hubs] = await Promise.all([
+  getCollection('articles', ({ data }) => !data.draft),
+  getCollection('guides', ({ data }) => !data.draft),
+  getCollection('comparisons', ({ data }) => !data.draft),
+  getCollection('hubs', ({ data }) => !data.draft),
+]);
+const relationEntries = buildRelationEntries({ articles, guides, comparisons, hubs });
+const related = getRelatedContent(
+  Astro.site?.href?.replace(/\/$/, '') ?? `${Astro.url.origin}`,
+  findRelationEntry(relationEntries, 'guide', guide.id)!,
+  relationEntries,
+  4,
+);
 
 const schema = {
   '@context': 'https://schema.org',
@@ -32,7 +46,19 @@ const schema = {
 };
 ---
 
-<BaseLayout title={guide.data.title} description={guide.data.description} ogType="article" schema={schema}>
+<BaseLayout
+  title={guide.data.title}
+  description={guide.data.description}
+  ogType="article"
+  schema={schema}
+  alternateLinks={[
+    {
+      href: `/agent/guides/${guide.id}.txt`,
+      type: 'text/plain',
+      title: 'Token-efficient agent text',
+    },
+  ]}
+>
   <article class="section">
     <div class="container content-width">
       <ContentHeader
@@ -40,13 +66,15 @@ const schema = {
         title={guide.data.title}
         description={guide.data.description}
         pubDate={guide.data.pubDate}
+        updatedDate={guide.data.updatedDate}
+        hub={guide.data.hub}
       />
 
       <div class="prose">
         <Content />
       </div>
 
-      <ContentFooter tags={guide.data.tags} />
+      <ContentFooter tags={guide.data.tags} related={related} />
     </div>
   </article>
 </BaseLayout>

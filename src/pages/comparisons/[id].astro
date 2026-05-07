@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContentHeader from '../../components/ContentHeader.astro';
 import ContentFooter from '../../components/ContentFooter.astro';
 import { getCollection, render } from 'astro:content';
+import { buildRelationEntries, findRelationEntry, getRelatedContent } from '../../utils/content-relations';
 
 export async function getStaticPaths() {
   const comparisons = await getCollection('comparisons', ({ data }) => !data.draft);
@@ -11,6 +12,19 @@ export async function getStaticPaths() {
 
 const { comp } = Astro.props;
 const { Content } = await render(comp);
+const [articles, guides, comparisons, hubs] = await Promise.all([
+  getCollection('articles', ({ data }) => !data.draft),
+  getCollection('guides', ({ data }) => !data.draft),
+  getCollection('comparisons', ({ data }) => !data.draft),
+  getCollection('hubs', ({ data }) => !data.draft),
+]);
+const relationEntries = buildRelationEntries({ articles, guides, comparisons, hubs });
+const related = getRelatedContent(
+  Astro.site?.href?.replace(/\/$/, '') ?? `${Astro.url.origin}`,
+  findRelationEntry(relationEntries, 'comparison', comp.id)!,
+  relationEntries,
+  4,
+);
 
 const schema = {
   '@context': 'https://schema.org',
@@ -32,7 +46,19 @@ const schema = {
 };
 ---
 
-<BaseLayout title={comp.data.title} description={comp.data.description} ogType="article" schema={schema}>
+<BaseLayout
+  title={comp.data.title}
+  description={comp.data.description}
+  ogType="article"
+  schema={schema}
+  alternateLinks={[
+    {
+      href: `/agent/comparisons/${comp.id}.txt`,
+      type: 'text/plain',
+      title: 'Token-efficient agent text',
+    },
+  ]}
+>
   <article class="section">
     <div class="container content-width">
       <ContentHeader
@@ -40,6 +66,8 @@ const schema = {
         title={comp.data.title}
         description={comp.data.description}
         pubDate={comp.data.pubDate}
+        updatedDate={comp.data.updatedDate}
+        hub={comp.data.hub}
         verdict={comp.data.verdict}
       />
 
@@ -47,7 +75,7 @@ const schema = {
         <Content />
       </div>
 
-      <ContentFooter tags={comp.data.tags} />
+      <ContentFooter tags={comp.data.tags} related={related} />
     </div>
   </article>
 </BaseLayout>

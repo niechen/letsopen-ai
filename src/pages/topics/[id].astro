@@ -4,6 +4,7 @@ import ArticleCard from '../../components/ArticleCard.astro';
 import SubscribeForm from '../../components/SubscribeForm.astro';
 import TopicIcon from '../../components/TopicIcon.astro';
 import { getCollection, render } from 'astro:content';
+import { compareFreshnessDesc } from '../../utils/freshness';
 
 export async function getStaticPaths() {
   const hubs = await getCollection('hubs', ({ data }) => !data.draft);
@@ -18,9 +19,9 @@ const [articles, guides, comparisons] = await Promise.all([
   getCollection('guides', ({ data }) => !data.draft && data.hub === hub.id),
   getCollection('comparisons', ({ data }) => !data.draft && data.hub === hub.id),
 ]);
-const sortedArticles = articles.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const sortedGuides = guides.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const sortedComparisons = comparisons.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const sortedArticles = articles.sort(compareFreshnessDesc);
+const sortedGuides = guides.sort(compareFreshnessDesc);
+const sortedComparisons = comparisons.sort(compareFreshnessDesc);
 const relatedContent = [
   ...sortedArticles.map((item) => ({ title: item.data.title, url: `${Astro.site}articles/${item.id}` })),
   ...sortedGuides.map((item) => ({ title: item.data.title, url: `${Astro.site}guides/${item.id}` })),
@@ -41,7 +42,19 @@ const schema = {
 };
 ---
 
-<BaseLayout title={hub.data.title} description={hub.data.description} ogType="website" schema={schema}>
+<BaseLayout
+  title={hub.data.title}
+  description={hub.data.description}
+  ogType="website"
+  schema={schema}
+  alternateLinks={[
+    {
+      href: `/agent/topics/${hub.id}.txt`,
+      type: 'text/plain',
+      title: 'Token-efficient agent text',
+    },
+  ]}
+>
   <article class="section">
     <div class="container content-width">
       <header class="hub-header card">
@@ -67,6 +80,7 @@ const schema = {
               description={article.data.description}
               href={`/articles/${article.id}`}
               pubDate={article.data.pubDate}
+              updatedDate={article.data.updatedDate}
               tags={article.data.tags}
               type={article.data.type}
             />
@@ -87,6 +101,7 @@ const schema = {
               description={guide.data.description}
               href={`/guides/${guide.id}`}
               pubDate={guide.data.pubDate}
+              updatedDate={guide.data.updatedDate}
               tags={guide.data.tags}
               type="guide"
             />
@@ -107,6 +122,7 @@ const schema = {
               description={comp.data.description}
               href={`/comparisons/${comp.id}`}
               pubDate={comp.data.pubDate}
+              updatedDate={comp.data.updatedDate}
               tags={comp.data.tags}
               type="comparison"
             />

@@ -37,6 +37,25 @@ import SubscribeForm from '../components/SubscribeForm.astro';
           <li>how the site should evolve as a product and brand</li>
         </ul>
 
+        <h2>Our editorial checks</h2>
+        <p>
+          Open source AI coverage can become misleading when it treats every GitHub repository, open-weight model, hosted API, and source-available tool as the same thing. We separate those categories before making recommendations.
+        </p>
+        <ul>
+          <li><strong>Source posture:</strong> is the code open source, source-available, open-weight, open-adjacent, or closed but important for comparison?</li>
+          <li><strong>Builder usefulness:</strong> can a serious builder actually run, inspect, integrate, or replace the component?</li>
+          <li><strong>Operational risk:</strong> what licenses, hosted dependencies, data policies, credentials, or evaluation gaps matter before adoption?</li>
+          <li><strong>Freshness:</strong> does the page need current release, pricing, or ecosystem verification before it should guide a decision?</li>
+        </ul>
+
+        <h2>How pages get updated</h2>
+        <p>
+          We treat important guides, comparisons, and hubs as living documents. When a page changes materially, it should expose an updated date in human pages, JSON indexes, search results, and agent text mirrors. That makes freshness visible to readers and machine consumers.
+        </p>
+        <p>
+          Tool recommendations are not legal advice or exhaustive benchmarks. They are editorial judgments for builders. For operational decisions, readers and agents should recheck licenses, releases, pricing, and security posture at the source.
+        </p>
+
         <h2>Why this model matters</h2>
         <p>
           AI publishing can collapse into content spam. We are aiming for the opposite: use automation to create more signal, not more sludge. The point is not infinite content volume. The point is faster, better coverage of what matters.
@@ -45,6 +64,9 @@ import SubscribeForm from '../components/SubscribeForm.astro';
         <h2>Open by design</h2>
         <p>
           The site is intentionally easy for both humans and machines to consume. In addition to human-readable pages, we expose <a href="/llms.txt">llms.txt</a>, <a href="/llms-full.txt">llms-full.txt</a>, <a href="/api/content-index.json">a machine-readable content index</a>, <a href="/agent-manifest.json">an agent manifest</a>, <a href="/api/search.json">a lightweight search index</a>, RSS, and a sitemap.
+        </p>
+        <p>
+          Machine-readable endpoints include routing metadata such as audience, builder stage, stack layers, use cases, openness signals, freshness dates, related-content edges, example queries, and next actions. The goal is for AI agents to retrieve the right page, understand its role, and know what to verify before answering a builder.
         </p>
 
         <h2>The standard</h2>

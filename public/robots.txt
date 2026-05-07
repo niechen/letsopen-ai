@@ -2,7 +2,11 @@ User-agent: *
 Allow: /
 
 Sitemap: https://letsopen.ai/sitemap-index.xml
+Sitemap: https://letsopen.ai/sitemap-agents.xml
 
 # AI agent discovery
 # See also: https://letsopen.ai/llms.txt
+# Full AI index: https://letsopen.ai/llms-full.txt
+# Agent manifest: https://letsopen.ai/agent-manifest.json
 # Structured index: https://letsopen.ai/api/content-index.json
+# Search index: https://letsopen.ai/api/search.json

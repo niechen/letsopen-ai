@@ -2,9 +2,10 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import { getCollection } from 'astro:content';
+import { compareFreshnessDesc } from '../../utils/freshness';
 
 const comparisons = await getCollection('comparisons', ({ data }) => !data.draft);
-const sorted = comparisons.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const sorted = comparisons.sort(compareFreshnessDesc);
 ---
 
 <BaseLayout title="Comparisons" description="Side-by-side comparisons of open source AI tools. Quick verdicts, honest tradeoffs, clear recommendations.">
@@ -21,6 +22,7 @@ const sorted = comparisons.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubD
             description={comp.data.description}
             href={`/comparisons/${comp.id}`}
             pubDate={comp.data.pubDate}
+            updatedDate={comp.data.updatedDate}
             tags={comp.data.tags}
             type="comparison"
           />
